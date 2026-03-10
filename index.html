@@ -629,16 +629,16 @@
                                 <div class="contact-one__form__bg-two"></div>
                                 <div class="form-one__group">
                                     <div class="form-one__control form-one__control--full">
-                                        <input id="name" type="text" name="name" placeholder="Your Full Name" required>
+                                        <input id="client-name" type="text" name="client-name" placeholder="Your Full Name" required>
                                     </div>
                                     <div class="form-one__control form-one__control--full">
-                                        <input id="email" type="email" name="email" placeholder="Email Address" required>
+                                        <input id="client-email" type="email" name="client-email" placeholder="Email Address" required>
                                     </div>
                                     <div class="form-one__control form-one__control--full">
-                                        <input id="phone" type="tel" name="phone" placeholder="Phone Number">
+                                        <input id="client-phone" type="tel" name="client-phone" placeholder="Phone Number">
                                     </div>
                                     <div class="form-one__control form-one__control--full">
-                                        <select id="subject" name="subject" style="width:100%; height:60px; padding:0 20px; border:1px solid #e0e0e0; background:#fff; color:#777; font-size:15px; font-family:inherit; outline:none; appearance:none; -webkit-appearance:none; background-image:url('data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%2212%22 height=%228%22 viewBox=%220 0 12 8%22%3E%3Cpath d=%22M1 1l5 5 5-5%22 stroke=%22%23999%22 stroke-width=%221.5%22 fill=%22none%22 stroke-linecap=%22round%22/%3E%3C/svg%3E'); background-repeat:no-repeat; background-position:right 20px center;">
+                                        <select id="case-type" name="case-type" class="mds-form-select">
                                             <option value="" disabled selected>Area of Law / Subject</option>
                                             <option value="Criminal &amp; Civil Litigation">Criminal &amp; Civil Litigation</option>
                                             <option value="Family Law">Family Law</option>
@@ -651,7 +651,7 @@
                                         </select>
                                     </div>
                                     <div class="form-one__control form-one__control--full">
-                                        <textarea id="message" name="message" placeholder="Briefly describe your legal matter..." rows="6"></textarea>
+                                        <textarea id="client-message" name="client-message" placeholder="Briefly describe your legal matter..." rows="6"></textarea>
                                     </div>
                                     <div class="form-one__control form-one__control--full">
                                         <button type="submit" class="procounsel-btn">
@@ -661,6 +661,15 @@
                                     </div>
                                 </div>
                             </form>
+                            <!-- Form success message — shown via JS after AJAX submit -->
+                            <div class="mds-form-success" id="form-success" role="alert" aria-live="polite">
+                                <div class="mds-form-success__icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h3 class="mds-form-success__title">Thank You for Reaching Out</h3>
+                                <p class="mds-form-success__text">Your enquiry has been received by Monique D. Scott &amp; Associates. Our office will respond shortly.</p>
+                                <p class="mds-form-success__urgent">If your matter is urgent, please call <a href="tel:+18767153194">876-715-3194</a>.</p>
+                            </div>
                         </div><!-- /.col-xl-7 -->
                     </div><!-- /.row (info + form) -->
 
@@ -668,7 +677,7 @@
                     <div class="row" style="margin-top: 50px;">
                         <div class="col-12 wow fadeInUp" data-wow-delay="100ms">
                             <div style="border-radius: 10px; overflow: hidden; box-shadow: 0 6px 30px rgba(0,0,0,0.35);">
-                                <iframe
+                                <iframe class="mds-google-map"
                                     src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3790.6642610431304!2d-76.46277206989699!3d18.17937378528085!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8edb2dba4ecc243b%3A0xba8011f3ebce9812!2sMonique%20D.%20Scott%20%26%20Associates%20Attorneys-at-Law!5e0!3m2!1sen!2sjm!4v1772278261303!5m2!1sen!2sjm"
                                     width="100%"
                                     height="450"
@@ -872,6 +881,34 @@
     <script>
         var el = document.querySelector('.dynamic-year');
         if (el) el.textContent = new Date().getFullYear();
+    </script>
+
+    <!-- Netlify Forms — AJAX submission for inline success message -->
+    <script>
+        (function () {
+            var form = document.querySelector('form[name="contact"]');
+            var success = document.getElementById('form-success');
+            if (!form || !success) return;
+
+            form.addEventListener('submit', function (e) {
+                e.preventDefault();
+                var payload = new URLSearchParams(new FormData(form)).toString();
+                fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: payload
+                })
+                .then(function () {
+                    form.style.display = 'none';
+                    success.style.display = 'flex';
+                    success.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                })
+                .catch(function () {
+                    // Network failure: fall back to native browser submit
+                    form.submit();
+                });
+            });
+        })();
     </script>
 </body>
 

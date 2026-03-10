@@ -98,6 +98,7 @@ body.boxed-wrapper .page-wrapper {
 .form-one .bootstrap-select > .dropdown-toggle,
 .form-one input[type=text],
 .form-one input[type=email],
+.form-one input[type=tel],
 .form-one textarea {
   background-color: transparent;
 }
@@ -294,11 +295,6 @@ h6 {
 
 .service-one__item:hover .practice-icon i {
   color: var(--procounsel-white, #fff);
-}
-
-/* ─── Feature bar — brand Primary Blue icon tint ───────────────── */
-.feature-one__item__icon i {
-  color: var(--procounsel-base, #c7954a);
 }
 
 /* ─── About section — align headshot top with content text ─────── */
@@ -575,5 +571,128 @@ body {
   .sec-title__title {
     font-size: 1.75rem !important;
     line-height: 1.3 !important;
+  }
+}
+
+/* ─── Hero title — extra-small screens (320px) ─────────────────── */
+@media (max-width: 400px) {
+  .main-slider-one__title {
+    font-size: 1.6rem !important;
+  }
+}
+
+/* ─── Form select — dark theme, consistent with inputs ─────────── */
+.mds-form-select {
+  width: 100%;
+  height: 60px;
+  padding: 0 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background-color: #1A1A2E;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23888' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 20px center;
+  cursor: pointer;
+  transition: border-color 300ms ease;
+}
+
+.mds-form-select:focus {
+  border-color: var(--procounsel-base, #c7954a);
+  outline: none;
+}
+
+.mds-form-select option {
+  background-color: #1A1A2E;
+  color: #fff;
+}
+
+/* ─── Contact form — success message ───────────────────────────── */
+.mds-form-success {
+  display: none;                        /* shown via JS after submit */
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 48px 32px;
+  background-color: var(--procounsel-black);
+  border: 1px solid var(--procounsel-black3);
+  border-left: 4px solid var(--procounsel-base, #c7954a);
+  border-radius: 4px;
+  min-height: 300px;
+}
+
+.mds-form-success__icon {
+  font-size: 54px;
+  color: var(--procounsel-base, #c7954a);
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.mds-form-success__title {
+  color: var(--procounsel-white);
+  font-size: 1.4rem;
+  margin-bottom: 14px;
+}
+
+.mds-form-success__text {
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 10px;
+  max-width: 420px;
+}
+
+.mds-form-success__urgent {
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.mds-form-success__urgent a {
+  color: var(--procounsel-base, #c7954a);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+/* ─── Google Maps iframe — responsive height ─────────────────── */
+.mds-google-map {
+  border: 0;
+  display: block;
+  width: 100%;
+  height: 450px;
+}
+
+@media (max-width: 767px) {
+  .mds-google-map {
+    height: 280px !important;
+  }
+}
+
+@media (max-width: 575px) {
+  .mds-google-map {
+    height: 240px !important;
+  }
+}
+
+/* ─── Contact overlay — vertical gradient on mobile (stacked layout) */
+@media (max-width: 991px) {
+  .contact-one__overlay {
+    background: linear-gradient(180deg, rgba(10, 21, 69, 0.9) 0%, rgba(10, 21, 69, 0) 100%);
+  }
+}
+
+/* ─── About quote block — mobile padding ───────────────────────── */
+@media (max-width: 575px) {
+  .mds-quote {
+    padding: 12px 14px;
+  }
+
+  .mds-quote p {
+    font-size: 14px;
   }
 }

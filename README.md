@@ -88,14 +88,33 @@ Netlify will detect `netlify.toml` automatically — no extra config needed.
 
 ### Contact Form (Netlify Forms)
 
-The contact form is already set up for Netlify Forms (`data-netlify="true"`).
-After the first deploy:
+The contact form uses `data-netlify="true"` and submits via AJAX — a success message is shown inline without a page reload.
+
+**After the first deploy, do the following in Netlify:**
 
 1. Go to **Netlify → Your site → Forms**
-2. You should see a form named **contact** listed there
-3. Go to **Forms → Form notifications** to add email alerts so Monique receives submissions at her inbox
+   You should see a form named **`contact`** listed automatically.
 
-No PHP or external service required.
+2. Go to **Forms → Form notifications → Add notification → Email notification**
+   - **Email to notify:** `moniquescottlaw@hotmail.com` (repeat for the second address if needed)
+   - **Custom email subject:** `New Legal Enquiry – {{ case-type }}`
+     _(This inserts the selected "Case Type" from the form into the subject line)_
+
+3. Click **Save**.
+
+**Form fields and how they appear in the email notification:**
+
+| Form field | Netlify label in email |
+|---|---|
+| `client-name` | Client Name |
+| `client-email` | Client Email |
+| `client-phone` | Client Phone |
+| `case-type` | Case Type |
+| `client-message` | Client Message |
+
+No PHP, no external service, no secrets required.
+
+> **Note:** Netlify detects the form during the first deployment by scanning `index.html` for `data-netlify="true"`. The form will **not** appear in the Forms tab until the first successful deploy.
 
 ---
 
@@ -123,6 +142,7 @@ After deploying on Netlify:
 
 ## Notes
 
-- `server.js` is for **local preview only** — it is excluded from git and is not deployed
-- `assets/inc/sendemail.php` remains in the repo but is **not called** — Netlify Forms handles submissions natively
-- All asset paths are relative — the site works correctly from the root directory
+- `server.js` is for **local preview only** — excluded from git, not deployed
+- Contact form submissions are handled by **Netlify Forms** — no PHP, no backend required
+- All asset paths are relative — the site works from the root directory on any static host
+- Form submissions are sent to Monique's email via Netlify form notifications (configure after first deploy)
