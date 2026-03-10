@@ -1,0 +1,408 @@
+/*
+ * MDS Custom Brand Styles
+ * Merged Palette — Brand Blues + Gold Accent
+ * ─────────────────────────────────────────────────────────────────
+ *  #0028B8  Brand Primary Blue   → active elements, primary colour
+ *  #495ECB  Brand Light Blue     → taglines, secondary accents
+ *  #1A1A2E  Brand Deep Navy      → main backgrounds (body, cards)
+ *  #0A1545  Dark Primary Blue    → section backgrounds (contact, why-choose)
+ *  #1E3070  Mid Brand Blue       → borders, dividers
+ *  #F4F6FB  Brand Off White      → light section backgrounds
+ *  #c7954a  Gold Accent (KEEP)   → buttons, CTAs, highlights
+ *  #ffffff  White                → text on dark, backgrounds
+ * ─────────────────────────────────────────────────────────────────
+ */
+
+:root {
+  /* Primary brand blue (nav active, primary colour references) */
+  --procounsel-primary:       #0028B8;
+  --procounsel-primary-rgb:   0, 40, 184;
+
+  /* Body text — light blue-gray, readable on deep navy backgrounds */
+  --procounsel-text:          #9ca8c5;
+  --procounsel-text-rgb:      156, 168, 197;
+
+  /* Tagline text — brand Light Blue */
+  --procounsel-text-dark:     #495ECB;
+  --procounsel-text-dark-rgb: 73, 94, 203;
+
+  /* Light section background — Brand Off White */
+  --procounsel-gray:          #F4F6FB;
+  --procounsel-gray-rgb:      244, 246, 251;
+
+  /* Tinted light panel */
+  --procounsel-gray2:         #e8ecf8;
+  --procounsel-gray2-rgb:     232, 236, 248;
+
+  /* White */
+  --procounsel-white:         #ffffff;
+  --procounsel-white-rgb:     255, 255, 255;
+
+  /* Main backgrounds — Brand Deep Navy */
+  --procounsel-black:         #1A1A2E;
+  --procounsel-black-rgb:     26, 26, 46;
+
+  /* Section backgrounds (contact, why-choose) — Dark Primary Blue */
+  --procounsel-black2:        #0A1545;
+  --procounsel-black2-rgb:    10, 21, 69;
+
+  /* Borders and dividers — Mid Brand Blue */
+  --procounsel-black3:        #1E3070;
+  --procounsel-black3-rgb:    30, 48, 112;
+}
+
+/* ─── Base backgrounds ─────────────────────────────────────────── */
+.contact-one__wrapper,
+.sticky-header--cloned,
+body,
+body.boxed-wrapper .page-wrapper {
+  background-color: var(--procounsel-black);
+}
+
+.client-carousel .client-carousel__one .client-carousel__one__item:hover,
+.topbar-one {
+  background-color: var(--procounsel-black);
+}
+
+/* ─── About section inner box ──────────────────────────────────── */
+.about-one__inner {
+  background-color: var(--procounsel-black);
+  border: 1px solid var(--procounsel-black3);
+  box-shadow: 0px 4px 80px 0px rgba(0, 0, 0, 0.6);
+}
+
+/* ─── Service cards ────────────────────────────────────────────── */
+.service-one__item {
+  background-color: var(--procounsel-black);
+  color: var(--procounsel-white);
+}
+
+.about-one__content__list li:hover span,
+.service-one__item__title {
+  color: var(--procounsel-white);
+}
+
+/* ─── Misc component backgrounds ───────────────────────────────── */
+.work-process-one__item__icon__inner,
+.work-process-one__item,
+.blog-card,
+.portfolio-one,
+.team-one,
+.testimonials-card,
+.contact-one__form .form-one__group,
+.contact-one__info {
+  background-color: var(--procounsel-black);
+}
+
+/* ─── Form inputs — transparent on dark background ─────────────── */
+.form-one .bootstrap-select > .dropdown-toggle,
+.form-one input[type=text],
+.form-one input[type=email],
+.form-one textarea {
+  background-color: transparent;
+}
+
+/* ─── Text colours ─────────────────────────────────────────────── */
+.testimonials-card__rating,
+.blog-card__user__name,
+.contact-one__info__text a,
+.contact-one__info__text {
+  color: var(--procounsel-white);
+}
+
+/* ─── Borders ──────────────────────────────────────────────────── */
+.service-one__item__top,
+.barnds-one__inner,
+.barnds-one__text,
+.why-choose-one__booking,
+.why-choose-one__experiance,
+.testimonials-card__top,
+.contact-one__info__item:last-child {
+  border-color: var(--procounsel-black3);
+}
+
+/* ─── Contact section ──────────────────────────────────────────── */
+/* Updated gradient to use brand Dark Primary Blue */
+.contact-one__overlay {
+  background: linear-gradient(90deg, #0A1545 33.55%, rgba(10, 21, 69, 0) 100%);
+}
+
+.why-choose-one,
+.contact-one {
+  background-color: var(--procounsel-black2);
+}
+
+.why-choose-one__bg::after {
+  background: linear-gradient(-90deg, #0A1545 33.55%, rgba(10, 21, 69, 0.1) 100%);
+}
+
+.why-choose-one__experiance__text,
+.why-choose-one__booking__text {
+  color: var(--procounsel-gray);
+}
+
+/* ─── Portfolio ─────────────────────────────────────────────────── */
+.portfolio-one {
+  padding-bottom: 0;
+}
+
+/* ─── Work process ──────────────────────────────────────────────── */
+.work-process-one__item {
+  border-color: var(--procounsel-black3);
+}
+
+/* ─── Blog cards ────────────────────────────────────────────────── */
+.blog-card {
+  border: none;
+}
+
+.blog-card__content {
+  border: 1px solid var(--procounsel-black3);
+  border-bottom: none;
+  transition: all 500ms ease;
+}
+
+.blog-card:hover {
+  border-color: var(--procounsel-white);
+}
+
+.blog-card:hover .blog-card__content {
+  background-color: var(--procounsel-black3);
+}
+
+.blog-card__meta {
+  background-color: var(--procounsel-black);
+}
+
+.blog-card__meta li:last-child {
+  border-color: var(--procounsel-black3);
+}
+
+/* ─── Header ────────────────────────────────────────────────────── */
+.main-header__info,
+.work-process-one__item__icon::after {
+  border-color: rgba(var(--procounsel-white-rgb), 0.2);
+}
+
+/* ─── Nav & headings ────────────────────────────────────────────── */
+.main-menu .main-menu__list > li > a,
+.why-choose-one__item__icon,
+.work-process-one__item__icon__inner,
+.testimonials-card__name,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--procounsel-white);
+}
+
+.main-header__cart,
+.main-header__search {
+  color: var(--procounsel-text);
+}
+
+.work-process-one__item:hover .work-process-one__item__icon__inner {
+  color: var(--procounsel-black);
+}
+
+/* ─── Section taglines ──────────────────────────────────────────── */
+.sec-title__tagline {
+  color: var(--procounsel-text-dark);
+}
+
+.sec-title__tagline__border {
+  background-color: var(--procounsel-primary);
+  border-color: var(--procounsel-white);
+}
+
+/* ─── About section CTA button ──────────────────────────────────── */
+.about-one .procounsel-btn > i {
+  border: none;
+}
+.about-one .procounsel-btn > i span {
+  background-color: var(--procounsel-white);
+}
+
+/* ─── Demo ──────────────────────────────────────────────────────── */
+.demo-one__btns {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.portfolio-one .procounsel-owl__carousel--basic-nav.owl-carousel .owl-nav button {
+  color: var(--procounsel-white);
+}
+
+/* ─── Why choose section CTA ────────────────────────────────────── */
+.why-choose-one .procounsel-btn {
+  color: var(--procounsel-primary);
+  background-color: var(--procounsel-white);
+}
+.why-choose-one .procounsel-btn:hover {
+  color: var(--procounsel-white);
+}
+
+/* ─── Nav active state — brand Primary Blue highlight ───────────── */
+.main-menu .main-menu__list > li.current > a,
+.main-menu .main-menu__list > li:hover > a {
+  color: var(--procounsel-base);
+}
+
+/* ─── Hero slider title responsive sizes ───────────────────────── */
+.main-slider-one__title {
+  font-size: 2.5rem;
+  line-height: 1.3;
+}
+@media (max-width: 991px) {
+  .main-slider-one__title {
+    font-size: 2.5rem;
+    line-height: 1.3;
+  }
+}
+@media (max-width: 767px) {
+  .main-slider-one__title {
+    font-size: 2rem;
+    line-height: 1.3;
+  }
+}
+
+/* ─── Areas of Practice — icon circles ─────────────────────────── */
+/* Gold tint background — keeps gold accent on dark cards */
+.practice-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background-color: rgba(199, 149, 74, 0.15);
+  margin-bottom: 20px;
+  transition: background-color 500ms ease;
+}
+
+.practice-icon i {
+  font-size: 34px;
+  color: var(--procounsel-base, #c7954a);
+  transition: color 500ms ease;
+}
+
+/* On card hover: icon circle turns semi-white, icon turns white */
+.service-one__item:hover .practice-icon {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.service-one__item:hover .practice-icon i {
+  color: var(--procounsel-white, #fff);
+}
+
+/* ─── Feature bar — brand Primary Blue icon tint ───────────────── */
+.feature-one__item__icon i {
+  color: var(--procounsel-base, #c7954a);
+}
+
+/* ─── About section — align headshot top with content text ─────── */
+/* On desktop, push the photo down so its top edge aligns closer    */
+/* to the "Meet Your Attorney" tagline. Mobile unaffected.          */
+@media (min-width: 992px) {
+  .about-one__image {
+    margin-top: 48px;
+  }
+}
+
+/* ─── MDS quote block in About ──────────────────────────────────── */
+.mds-quote {
+  border-left: 3px solid var(--procounsel-base);
+  padding: 16px 20px;
+  margin: 24px 0;
+  background-color: rgba(0, 40, 184, 0.08);
+  border-radius: 0 6px 6px 0;
+}
+
+.mds-quote p {
+  color: var(--procounsel-white);
+  font-style: italic;
+  line-height: 1.7;
+  margin: 0 0 8px;
+}
+
+.mds-quote footer {
+  color: var(--procounsel-base);
+  font-size: 13px;
+}
+
+/* ─── Footer — white text, gold hover, no blue-on-blue clashing ── */
+.main-footer {
+  background-color: var(--procounsel-black); /* Deep Navy #1A1A2E, not bright blue */
+}
+
+.main-footer__bottom {
+  background-color: #060C2E; /* Darker distinction for copyright bar */
+}
+
+.footer-widget__title {
+  color: var(--procounsel-white) !important;
+}
+
+.footer-widget__text,
+.footer-widget__text p {
+  color: rgba(255, 255, 255, 0.82) !important;
+  line-height: 1.8;
+}
+
+.footer-widget__links li,
+.footer-widget__links li a {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.footer-widget__links li a:hover {
+  color: var(--procounsel-base, #c7954a) !important;
+  padding-left: 6px;
+}
+
+.main-footer__copyright,
+.main-footer__copyright a {
+  color: rgba(255, 255, 255, 0.72) !important;
+}
+
+.main-footer__copyright a:hover {
+  color: var(--procounsel-base, #c7954a) !important;
+}
+
+/* Contact info text in footer widget */
+.footer-widget__contact li,
+.footer-widget__contact li a,
+.footer-widget__contact .footer-widget__contact__text {
+  color: rgba(255, 255, 255, 0.82) !important;
+}
+
+.footer-widget__contact li a:hover {
+  color: var(--procounsel-base, #c7954a) !important;
+}
+
+/* Footer bottom border */
+.main-footer__top {
+  border-bottom-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+/* ── Contact Info List (stacked) ────────────────────────────────── */
+.contact-info-list {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+/* Scoped override — removes framework padding/border, sets icon+text layout */
+.contact-info-list .contact-one__info__item {
+  width: 100%;
+  padding: 12px 0 !important;
+  box-sizing: border-box;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  border-top: none !important;
+}
+
+.contact-info-list .contact-one__info__item:first-child {
+  padding-top: 0 !important;
+}

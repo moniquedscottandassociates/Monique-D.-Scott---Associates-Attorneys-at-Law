@@ -1,0 +1,187 @@
+:root {
+  --procounsel-text: #869390;
+  --procounsel-gray: #ededed;
+  --procounsel-white: #ffffff;
+  --procounsel-text-rgb: toRGB(#869390);
+  --procounsel-black: #050d22;
+  --procounsel-black-rgb: toRGB(#010f0b);
+  --procounsel-black2: #1b2748;
+  --procounsel-black2-rgb: toRGB(#082820);
+  --procounsel-black3: #394871;
+  --procounsel-black3-rgb: toRGB(#394871);
+}
+
+.contact-one__wrapper,
+.sticky-header--cloned,
+body,
+body.boxed-wrapper .page-wrapper {
+  background-color: var(--procounsel-black);
+}
+
+.client-carousel .client-carousel__one .client-carousel__one__item:hover,
+.topbar-one {
+  background-color: var(--procounsel-black);
+}
+
+.about-one__inner {
+  background-color: var(--procounsel-black);
+  border: 1px solid var(--procounsel-black3);
+  box-shadow: 0px 4px 80px 0px rgba(0, 0, 0, 0.6);
+}
+
+.service-one__item {
+  background-color: var(--procounsel-black);
+  color: var(--procounsel-white);
+}
+
+.about-one__content__list li:hover span,
+.service-one__item__title {
+  color: var(--procounsel-white);
+}
+
+.work-process-one__item__icon__inner,
+.work-process-one__item,
+.blog-card,
+.portfolio-one,
+.team-one,
+.testimonials-card,
+.contact-one__form .form-one__group,
+.contact-one__info {
+  background-color: var(--procounsel-black);
+}
+
+.form-one .bootstrap-select > .dropdown-toggle,
+.form-one input[type=text],
+.form-one input[type=email],
+.form-one textarea {
+  background-color: transparent;
+}
+
+.testimonials-card__rating,
+.blog-card__user__name,
+.contact-one__info__text a,
+.contact-one__info__text {
+  color: var(--procounsel-white);
+}
+
+.service-one__item__top,
+.barnds-one__inner,
+.barnds-one__text,
+.why-choose-one__booking,
+.why-choose-one__experiance,
+.testimonials-card__top,
+.contact-one__info__item:last-child {
+  border-color: var(--procounsel-black3);
+}
+
+.contact-one__overlay {
+  background: linear-gradient(90deg, #1b2748 33.55%, rgba(27, 39, 72, 0) 100%);
+}
+
+.why-choose-one,
+.contact-one {
+  background-color: var(--procounsel-black2);
+}
+
+.why-choose-one__bg::after {
+  background: linear-gradient(-90deg, #1b2748 33.55%, rgba(27, 39, 72, 0.1) 100%);
+}
+
+.why-choose-one__experiance__text,
+.why-choose-one__booking__text {
+  color: var(--procounsel-gray);
+}
+
+.portfolio-one {
+  padding-bottom: 0;
+}
+
+.work-process-one__item {
+  border-color: var(--procounsel-black3);
+}
+
+.blog-card {
+  border: none;
+}
+
+.blog-card__content {
+  border: 1px solid var(--procounsel-black3);
+  border-bottom: none;
+  transition: all 500ms ease;
+}
+
+.blog-card:hover {
+  border-color: var(--procounsel-white);
+}
+
+.blog-card:hover .blog-card__content {
+  background-color: var(--procounsel-black3);
+}
+
+.blog-card__meta {
+  background-color: #19223a;
+}
+
+.blog-card__meta li:last-child {
+  border-color: var(--procounsel-black3);
+}
+
+.main-header__info,
+.work-process-one__item__icon::after {
+  border-color: rgba(var(--procounsel-white-rgb), 0.2);
+}
+
+.main-menu .main-menu__list > li > a,
+.why-choose-one__item__icon,
+.work-process-one__item__icon__inner,
+.testimonials-card__name,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--procounsel-white);
+}
+
+.main-header__cart,
+.main-header__search {
+  color: var(--procounsel-text);
+}
+
+.work-process-one__item:hover .work-process-one__item__icon__inner {
+  color: var(--procounsel-black);
+}
+
+.sec-title__tagline {
+  color: var(--procounsel-text-dark);
+}
+
+.sec-title__tagline__border {
+  background-color: var(--procounsel-primary);
+  border-color: var(--procounsel-white);
+}
+
+.about-one .procounsel-btn > i {
+  border: none;
+}
+.about-one .procounsel-btn > i span {
+  background-color: var(--procounsel-white);
+}
+
+.demo-one__btns {
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.portfolio-one .procounsel-owl__carousel--basic-nav.owl-carousel .owl-nav button {
+  color: var(--procounsel-white);
+}
+
+.why-choose-one .procounsel-btn {
+  color: var(--procounsel-primary);
+  background-color: var(--procounsel-white);
+}
+.why-choose-one .procounsel-btn:hover {
+  color: var(--procounsel-white);
+}
+/*# sourceMappingURL=procounsel-dark.css.map */

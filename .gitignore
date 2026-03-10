@@ -1,0 +1,20 @@
+# Local development server — not needed for production
+server.js
+
+# Claude Code editor config — local only
+.claude/
+
+# OS / editor junk
+.DS_Store
+Thumbs.db
+desktop.ini
+*.swp
+*.swo
+
+# Node (if ever added)
+node_modules/
+npm-debug.log*
+
+# Deployment notes / internal docs — keep out of public repo
+DEPLOYMENT-SOP.md
+"Monique D. Scott & Associates Website Plan.docx"

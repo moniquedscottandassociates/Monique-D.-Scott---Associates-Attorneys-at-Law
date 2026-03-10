@@ -1,0 +1,32 @@
+body {
+  overflow-x: hidden;
+  direction: rtl;
+}
+
+.owl-carousel {
+  direction: ltr;
+}
+
+.owl-carousel .owl-nav,
+.owl-carousel .owl-dots,
+.owl-carousel .owl-item {
+  direction: rtl;
+}
+
+.contact__input-box .bootstrap-select .dropdown-menu,
+.bootstrap-select .dropdown-toggle .filter-option {
+  text-align: right;
+}
+
+.list-unstyled {
+  padding-right: 0;
+}
+
+.main-slider-one__carousel.owl-carousel .owl-dots {
+  left: -50px;
+}
+
+.footer-widget__newsletter button[type=submit] i {
+  transform: scaleX(-1);
+}
+/*# sourceMappingURL=procounsel-custom-rtl.css.map */
