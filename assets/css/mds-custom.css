@@ -406,3 +406,174 @@ h6 {
 .contact-info-list .contact-one__info__item:first-child {
   padding-top: 0 !important;
 }
+
+/* ─── Global: prevent horizontal scroll ──────────────────────── */
+html,
+body {
+  overflow-x: hidden;
+  max-width: 100%;
+}
+
+/* ─── Floating WhatsApp button ────────────────────────────────── */
+.mds-whatsapp-float {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 56px;
+  height: 56px;
+  background-color: #25d366;
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 26px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  transition: transform 300ms ease, box-shadow 300ms ease;
+  text-decoration: none;
+}
+
+.mds-whatsapp-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4);
+  color: #fff;
+}
+
+/* ─── Floating Call button ────────────────────────────────────── */
+.mds-call-float {
+  position: fixed;
+  bottom: 24px;
+  right: 90px;
+  width: 56px;
+  height: 56px;
+  background-color: var(--procounsel-primary, #0028B8);
+  color: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  z-index: 999;
+  transition: transform 300ms ease, box-shadow 300ms ease;
+  text-decoration: none;
+}
+
+.mds-call-float:hover {
+  transform: scale(1.08);
+  box-shadow: 0 6px 22px rgba(0, 0, 0, 0.4);
+  color: #fff;
+}
+
+/* ─── Stats bar — mobile responsive ──────────────────────────── */
+@media (max-width: 767px) {
+  .mds-stats-bar {
+    padding: 36px 0 !important;
+  }
+
+  /* Remove right border on the even item (right column) each row */
+  .mds-stats-bar .row > div:nth-child(2n) > div {
+    border-right: none !important;
+  }
+
+  /* Add a subtle separator between the two rows */
+  .mds-stats-bar .row > div:nth-child(n+3) {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    padding-top: 20px !important;
+    margin-top: 4px;
+  }
+}
+
+@media (max-width: 575px) {
+  /* Scale down stat numbers on very small screens */
+  .mds-stats-bar .row > div > div > div:first-child {
+    font-size: 38px !important;
+  }
+
+  .mds-stats-bar .row > div > div > div:first-child span {
+    font-size: 24px !important;
+  }
+}
+
+/* ─── Hero slider — small screen improvements ─────────────────── */
+@media (max-width: 575px) {
+  .main-slider-one__item {
+    min-height: 500px;
+  }
+
+  .main-slider-one__content {
+    padding: 0 8px;
+  }
+
+  .main-slider-one__text {
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .main-slider-one__btn {
+    margin-top: 20px;
+  }
+}
+
+/* ─── About section — mobile spacing ─────────────────────────── */
+@media (max-width: 991px) {
+  .about-one__image {
+    margin-top: 0 !important;
+    margin-bottom: 24px;
+  }
+}
+
+@media (max-width: 767px) {
+  .about-one__inner {
+    padding: 24px 16px !important;
+  }
+}
+
+/* ─── Services section — mobile card padding ─────────────────── */
+@media (max-width: 575px) {
+  .service-one__item {
+    padding: 24px 18px !important;
+  }
+}
+
+/* ─── Contact section — mobile layout ────────────────────────── */
+@media (max-width: 767px) {
+  .contact-one__form .form-one__group {
+    padding: 20px 16px !important;
+  }
+}
+
+/* ─── Footer — mobile spacing ────────────────────────────────── */
+@media (max-width: 767px) {
+  .footer-widget {
+    margin-bottom: 28px;
+  }
+}
+
+/* ─── Floating buttons — mobile sizing ───────────────────────── */
+@media (max-width: 575px) {
+  .mds-whatsapp-float {
+    width: 50px;
+    height: 50px;
+    font-size: 22px;
+    bottom: 16px;
+    right: 16px;
+  }
+
+  .mds-call-float {
+    width: 50px;
+    height: 50px;
+    font-size: 19px;
+    bottom: 16px;
+    right: 76px;
+  }
+}
+
+/* ─── Section headings — scale on small screens ───────────────── */
+@media (max-width: 575px) {
+  .sec-title__title {
+    font-size: 1.75rem !important;
+    line-height: 1.3 !important;
+  }
+}
