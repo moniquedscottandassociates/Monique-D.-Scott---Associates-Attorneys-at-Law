@@ -410,6 +410,19 @@ body {
   max-width: 100%;
 }
 
+/* ─── Global: prevent images from stretching beyond container ─── */
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+/* ─── About section headshot ─────────────────────────────────── */
+.about-one__image img {
+  display: block;           /* removes inline bottom gap */
+  width: 100%;
+  height: auto;
+}
+
 /* ─── Reset <address> italic browser default ──────────────────── */
 address {
   font-style: normal;
