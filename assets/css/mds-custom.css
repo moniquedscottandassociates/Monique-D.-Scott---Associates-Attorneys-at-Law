@@ -180,6 +180,12 @@ body.boxed-wrapper .page-wrapper {
 }
 
 /* ─── Header ────────────────────────────────────────────────────── */
+/* Remove the template border-bottom that cuts a visible line across
+   the hero image (procounsel.css sets border-bottom on .main-header) */
+.main-header {
+  border-bottom: none;
+}
+
 .main-header__info,
 .work-process-one__item__icon::after {
   border-color: rgba(var(--procounsel-white-rgb), 0.2);
@@ -716,37 +722,52 @@ address {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   MDS Hero — Two-column layout: image left, content right
+   MDS Hero — Two-column layout: image left (full height), content right
    ═══════════════════════════════════════════════════════════════ */
 
 .mds-hero {
   position: relative;
   background-color: #0A1545;
   overflow: hidden;
-  padding: 120px 0 80px;
 }
 
+/* Flex row — stretch so the image column fills the full height */
 .mds-hero__inner {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 40px;
-  max-width: 1320px;
-  margin: 0 auto;
-  padding: 0 40px;
+  align-items: stretch;
+  min-height: 100vh;
 }
 
-.mds-hero__image,
-.mds-hero__content {
-  flex: 1 1 50%;
+/* ── Left: image column — fills full hero height ────────────── */
+.mds-hero__image {
+  flex: 0 0 52%;
+  overflow: hidden;
+  position: relative;
 }
 
+/* Image fills the column entirely; face kept on left side */
 .mds-hero__image img {
   width: 100%;
-  height: auto;
+  height: 100%;
   display: block;
   object-fit: cover;
-  border-radius: 4px;
+  object-position: left center;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+/* ── Right: content column ──────────────────────────────────── */
+.mds-hero__content {
+  flex: 0 0 48%;
+  display: flex;
+  align-items: center;
+  /* top padding clears the absolute-positioned sticky header (~90px) */
+  padding: 120px 70px 80px 50px;
+}
+
+.mds-hero__content-inner {
+  width: 100%;
 }
 
 /* Gold tagline with leading rule */
@@ -789,30 +810,41 @@ address {
   margin-bottom: 40px;
 }
 
-/* ── Tablet and below: stack columns ──────────────────────── */
+/* ── Tablet: ≤ 991px — stack vertically ────────────────────── */
 @media (max-width: 991px) {
-  .mds-hero {
-    padding: 100px 0 60px;
-  }
-
   .mds-hero__inner {
     flex-direction: column;
-    padding: 0 24px;
+    min-height: auto;
   }
 
-  .mds-hero__image,
-  .mds-hero__content {
-    flex: 1 1 100%;
+  .mds-hero__image {
+    flex: none;
     width: 100%;
+    height: 500px;
+    position: relative;
+  }
+
+  .mds-hero__content {
+    flex: none;
+    width: 100%;
+    padding: 40px 24px 50px;
   }
 }
 
+/* ── Small mobile: ≤ 575px ──────────────────────────────────── */
 @media (max-width: 575px) {
-  .mds-hero {
-    padding: 80px 0 48px;
+  .mds-hero__image {
+    height: 360px;
   }
 
-  .mds-hero__inner {
-    gap: 28px;
+  .mds-hero__content {
+    padding: 32px 20px 44px;
+  }
+}
+
+/* ── Extra-small: ≤ 400px ───────────────────────────────────── */
+@media (max-width: 400px) {
+  .mds-hero__image {
+    height: 280px;
   }
 }
