@@ -824,7 +824,7 @@ address {
   overflow: hidden;
 }
 
-/* Fill the full column height, face anchored to top */
+/* Fill the full column height; office photo is landscape, face is centred */
 .mds-hero__image img {
   position: absolute;
   top: 0;
@@ -832,7 +832,7 @@ address {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: 38% center;
   display: block;
 }
 
