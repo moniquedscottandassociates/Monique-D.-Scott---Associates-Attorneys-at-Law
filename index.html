@@ -164,44 +164,33 @@
 
         <main id="main-content">
 
-        <!-- ===== HERO SLIDER ===== -->
-        <section class="main-slider-one" id="home">
-            <div class="main-slider-one__carousel procounsel-owl__carousel owl-carousel" data-owl-options='{
-                "loop": false,
-                "animateOut": "fadeOut",
-                "animateIn": "fadeIn",
-                "items": 1,
-                "autoplay": false,
-                "smartSpeed": 1000,
-                "nav": false,
-                "dots": false,
-                "margin": 0
-            }'>
-                <!-- Slide 1 -->
-                <div class="item">
-                    <div class="main-slider-one__item">
-                        <div class="main-slider-one__bg" style="background-image: url(assets/images/backgrounds/slider-1-2.jpg);"></div><!-- bg -->
-                        <div class="main-slider-one__overlay-one"></div>
-                        <div class="main-slider-one__overlay-two"></div>
-                        <div class="container">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="main-slider-one__content">
-                                        <h1 class="main-slider-one__title"></h1>
-                                        <p class="main-slider-one__text">12+ years of trusted legal representation<br />serving Port Antonio, Portland, Jamaica.</p>
-                                        <div class="main-slider-one__btn">
-                                            <a href="#services" class="procounsel-btn"><i>Explore Our Services</i><span>Explore Our Services</span></a>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+        <!-- ===== HERO — Safe-zone two-column layout ===== -->
+        <section class="mds-hero" id="home">
+            <div class="mds-hero__inner">
+
+                <!-- Left: content zone (safe zone — text stays here, never over the face) -->
+                <div class="mds-hero__content">
+                    <div class="mds-hero__content-inner">
+                        <p class="mds-hero__tagline">Attorneys-at-Law &middot; Port Antonio, Jamaica</p>
+                        <h1 class="mds-hero__title">Trusted Legal Representation in Port Antonio, Portland</h1>
+                        <p class="mds-hero__text">12+ years of trusted legal representation serving Port Antonio, Portland, Jamaica.</p>
+                        <div class="mds-hero__btn">
+                            <a href="#services" class="procounsel-btn"><i>Explore Our Services</i><span>Explore Our Services</span></a>
                         </div>
                     </div>
-                </div><!-- item -->
+                </div><!-- /.mds-hero__content -->
 
-            </div>
-        </section>
-        <!-- main-slider-end -->
+                <!-- Right: image zone — Monique D. Scott (face anchored to top) -->
+                <div class="mds-hero__image">
+                    <img src="assets/images/mds/monique-headshot.jpg"
+                         alt="Monique D. Scott, LLB (Hons.) — Attorney-at-Law, Port Antonio, Portland, Jamaica"
+                         width="3283" height="4104"
+                         fetchpriority="high" decoding="async" />
+                </div><!-- /.mds-hero__image -->
+
+            </div><!-- /.mds-hero__inner -->
+        </section><!-- /.mds-hero -->
+        <!-- hero-end -->
 
 
         <!-- ===== STATS BAR ===== -->
