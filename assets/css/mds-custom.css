@@ -410,6 +410,11 @@ body {
   max-width: 100%;
 }
 
+/* ─── Reset <address> italic browser default ──────────────────── */
+address {
+  font-style: normal;
+}
+
 /* ─── Floating WhatsApp button ────────────────────────────────── */
 .mds-whatsapp-float {
   position: fixed;
