@@ -722,52 +722,82 @@ address {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   MDS Hero — Two-column layout: image left (full height), content right
-   ═══════════════════════════════════════════════════════════════ */
+   MDS Hero — Full-bleed image, right-side gradient, content right
+   ═══════════════════════════════════════════════════════════════
+   Image fills the entire section as an absolute layer.
+   A soft gradient darkens only the right side for text readability.
+   Monique's face remains open and unobscured on the left.
+   ─────────────────────────────────────────────────────────────── */
 
+/* ── Section wrapper ─────────────────────────────────────────── */
 .mds-hero {
   position: relative;
-  background-color: #0A1545;
+  min-height: 760px;
   overflow: hidden;
+  background-color: #0A1545; /* fallback while image loads */
 }
 
-/* Flex row — stretch so the image column fills the full height */
-.mds-hero__inner {
-  display: flex;
-  align-items: stretch;
-  min-height: 100vh;
-}
-
-/* ── Left: image column — fills full hero height ────────────── */
+/* ── Full-bleed background image (z-index 1) ─────────────────── */
 .mds-hero__image {
-  flex: 0 0 52%;
-  overflow: hidden;
-  position: relative;
+  position: absolute;
+  inset: 0;
+  z-index: 1;
 }
 
-/* Image fills the column entirely; face kept on left side */
 .mds-hero__image img {
   width: 100%;
   height: 100%;
   display: block;
   object-fit: cover;
-  object-position: left center;
-  position: absolute;
-  top: 0;
-  left: 0;
+  object-position: left center; /* keeps face on the left */
 }
 
-/* ── Right: content column ──────────────────────────────────── */
-.mds-hero__content {
-  flex: 0 0 48%;
+/* ── Soft right-side gradient overlay (z-index 2) ───────────────
+   Left stays image-open; right deepens enough for text contrast.
+   No harsh solid block — purely a fade.                          */
+.mds-hero::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background: linear-gradient(
+    to right,
+    rgba(0, 28, 90, 0.00)  0%,
+    rgba(0, 28, 90, 0.10) 32%,
+    rgba(0, 28, 90, 0.45) 58%,
+    rgba(0, 28, 90, 0.80) 100%
+  );
+  pointer-events: none;
+}
+
+/* ── Content layer — above image and gradient (z-index 3) ─────── */
+.mds-hero__inner {
+  position: relative;
+  z-index: 3;
+  min-height: 760px;
   display: flex;
   align-items: center;
-  /* top padding clears the absolute-positioned sticky header (~90px) */
-  padding: 120px 70px 80px 50px;
+  justify-content: flex-end; /* push content to the right */
+  padding: 120px 72px 88px;
+}
+
+/* Content block — constrained width, sits over the gradient */
+.mds-hero__content {
+  width: 100%;
+  max-width: 540px;
+  padding: 34px 34px 34px 38px;
 }
 
 .mds-hero__content-inner {
   width: 100%;
+}
+
+/* Button pushed subtly to the right on desktop */
+.mds-hero__btn {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 8px;
+  padding-right: 6px;
 }
 
 /* Gold tagline with leading rule */
@@ -806,45 +836,116 @@ address {
 .mds-hero__text {
   font-size: 16px;
   line-height: 1.85;
-  color: rgba(255, 255, 255, 0.72);
-  margin-bottom: 40px;
+  color: rgba(255, 255, 255, 0.80);
+  margin-bottom: 32px;
 }
 
-/* ── Tablet: ≤ 991px — stack vertically ────────────────────── */
-@media (max-width: 991px) {
+/* ── Large tablet: ≤ 1199px ─────────────────────────────────── */
+@media (max-width: 1199px) {
+  .mds-hero,
   .mds-hero__inner {
-    flex-direction: column;
-    min-height: auto;
+    min-height: 700px;
   }
 
-  .mds-hero__image {
-    flex: none;
-    width: 100%;
-    height: 500px;
-    position: relative;
+  .mds-hero__inner {
+    padding: 110px 48px 72px;
   }
 
   .mds-hero__content {
-    flex: none;
-    width: 100%;
-    padding: 40px 24px 50px;
+    max-width: 500px;
+    padding: 28px 28px 28px 32px;
+  }
+
+  .mds-hero__btn {
+    padding-right: 4px;
+  }
+}
+
+/* ── Tablet: ≤ 991px ────────────────────────────────────────────
+   Content stays over image but shifts to bottom-right.
+   Image object-position nudged slightly right to keep face visible. */
+@media (max-width: 991px) {
+  .mds-hero,
+  .mds-hero__inner {
+    min-height: 640px;
+  }
+
+  .mds-hero__image img {
+    object-position: 22% center;
+  }
+
+  .mds-hero__inner {
+    justify-content: flex-end;
+    align-items: flex-end;
+    padding: 110px 32px 44px;
+  }
+
+  .mds-hero__content {
+    max-width: 100%;
+    padding: 24px 22px 24px 24px;
+  }
+
+  .mds-hero__btn {
+    justify-content: flex-start;
+    padding-right: 0;
+    margin-top: 20px;
+  }
+}
+
+/* ── Mobile: ≤ 767px ────────────────────────────────────────────
+   Gradient switches to bottom-up so lower text area stays readable. */
+@media (max-width: 767px) {
+  .mds-hero,
+  .mds-hero__inner {
+    min-height: 560px;
+  }
+
+  .mds-hero::after {
+    background: linear-gradient(
+      to bottom,
+      rgba(0, 28, 90, 0.10)  0%,
+      rgba(0, 28, 90, 0.30) 40%,
+      rgba(0, 28, 90, 0.72) 100%
+    );
+  }
+
+  .mds-hero__image img {
+    object-position: 26% center;
+  }
+
+  .mds-hero__inner {
+    justify-content: center;
+    align-items: flex-end;
+    padding: 100px 20px 32px;
+  }
+
+  .mds-hero__content {
+    max-width: 100%;
+    padding: 20px 18px;
+  }
+
+  .mds-hero__btn {
+    justify-content: flex-start;
+    margin-top: 18px;
   }
 }
 
 /* ── Small mobile: ≤ 575px ──────────────────────────────────── */
 @media (max-width: 575px) {
-  .mds-hero__image {
-    height: 360px;
+  .mds-hero,
+  .mds-hero__inner {
+    min-height: 500px;
   }
 
-  .mds-hero__content {
-    padding: 32px 20px 44px;
+  .mds-hero__inner {
+    padding: 90px 16px 28px;
   }
 }
 
 /* ── Extra-small: ≤ 400px ───────────────────────────────────── */
 @media (max-width: 400px) {
-  .mds-hero__image {
-    height: 280px;
+  .mds-hero,
+  .mds-hero__inner {
+    min-height: 460px;
   }
 }
