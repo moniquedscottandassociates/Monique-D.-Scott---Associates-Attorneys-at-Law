@@ -716,49 +716,46 @@ address {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   MDS Hero — Safe-zone two-column premium law firm layout
+   MDS Hero v2 — main-slider-one adapted as two-column safe-zone
    ═══════════════════════════════════════════════════════════════
-   Desktop:  left content zone (lower-left safe area) + right image
-   Tablet:   side-by-side, reduced padding, content centred
+   Uses native Procounsel .main-slider-one structure with Bootstrap
+   grid inside: left text safe zone + right Monique image zone.
+   Desktop:  side-by-side, text lower-left, image right
+   Tablet:   side-by-side, reduced padding
    Mobile:   stacked — image first (face visible), text below
    ─────────────────────────────────────────────────────────────── */
 
-/* Outer section */
-.mds-hero {
-  position: relative;
+/* Override template background on the item — we supply the dark
+   navy via CSS instead of a background-image helper div          */
+.mds-hero-v2,
+.mds-hero-v2 .main-slider-one__item {
   background-color: #0A1545;
-  overflow: hidden;
+  background-image: none !important;
 }
 
-/* Two-column flex row */
-.mds-hero__inner {
+.mds-hero-v2 .main-slider-one__item {
+  min-height: 100vh;
+  padding: 0;
   display: flex;
+  flex-direction: column;
+}
+
+/* Row stretches to fill the item height */
+.mds-hero-v2__row {
   min-height: 100vh;
   align-items: stretch;
 }
 
-/* ── Left: content zone ─────────────────────────────────────── */
-.mds-hero__content {
-  flex: 0 0 52%;
-  max-width: 52%;
+/* ── Left: text safe zone ───────────────────────────────────── */
+.mds-hero-v2__left {
   position: relative;
-  display: flex;
-  align-items: flex-end;        /* anchor text to the lower-left */
   padding: 140px 56px 88px 72px;
+  background: linear-gradient(140deg, #060C2E 0%, #0A1545 55%, rgba(0, 28, 100, 0.9) 100%);
   z-index: 2;
 }
 
-/* Dark gradient behind the text block */
-.mds-hero__content::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(140deg, #060C2E 0%, #0A1545 55%, rgba(0, 28, 100, 0.9) 100%);
-  z-index: -1;
-}
-
-/* Thin gold accent bar on the left edge of the content column */
-.mds-hero__content::after {
+/* Gold accent bar on left edge */
+.mds-hero-v2__left::after {
   content: '';
   position: absolute;
   left: 0;
@@ -768,10 +765,23 @@ address {
   background: linear-gradient(180deg, transparent 0%, #c7954a 25%, #c7954a 75%, transparent 100%);
 }
 
-/* Constrains copy width so text doesn't sprawl on wide screens */
-.mds-hero__content-inner {
+/* Reset any template absolute-positioning on .main-slider-one__content */
+.mds-hero-v2__content {
+  position: relative !important;
+  top: auto !important;
+  left: auto !important;
+  transform: none !important;
+  padding: 0 !important;
   max-width: 500px;
   width: 100%;
+}
+
+/* H1 inside the hero — fluid, readable at all widths */
+.mds-hero-v2 .main-slider-one__title {
+  font-size: clamp(1.75rem, 2.8vw, 3rem) !important;
+  line-height: 1.22 !important;
+  color: #ffffff !important;
+  margin-bottom: 22px;
 }
 
 /* Gold tagline with leading rule */
@@ -797,136 +807,100 @@ address {
   flex-shrink: 0;
 }
 
-/* H1 — fluid size using clamp; SEO-friendly, never overflows */
-.mds-hero__title {
-  font-family: var(--procounsel-heading-font, 'Marcellus', serif);
-  font-size: clamp(1.75rem, 2.8vw, 3rem);
-  line-height: 1.22;
-  color: #ffffff;
-  margin-bottom: 22px;
-  letter-spacing: -0.01em;
-}
-
-/* Supporting paragraph */
-.mds-hero__text {
-  font-size: 16px;
-  line-height: 1.85;
-  color: rgba(255, 255, 255, 0.72);
-  margin-bottom: 40px;
-  max-width: 400px;
-}
-
 /* ── Right: image zone ──────────────────────────────────────── */
-.mds-hero__image {
-  flex: 0 0 48%;
-  max-width: 48%;
+.mds-hero-v2__right {
   position: relative;
   overflow: hidden;
+  min-height: 500px;
 }
 
-/* Fill the full column height; office photo is landscape, face is centred */
-.mds-hero__image img {
+.mds-hero-v2__right img {
   position: absolute;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 38% center;
+  object-position: center center;
   display: block;
 }
 
-/* Soft gradient where the image bleeds into the content column */
-.mds-hero__image::before {
+/* Soft left-edge blend where image meets content column */
+.mds-hero-v2__right::before {
   content: '';
   position: absolute;
   top: 0;
   left: 0;
   width: 90px;
   height: 100%;
-  background: linear-gradient(to right, #0A1545 0%, transparent 100%);
+  background: linear-gradient(to right, #0A1545, transparent);
   z-index: 1;
   pointer-events: none;
 }
 
 /* ── Tablet landscape: 768px – 991px ───────────────────────────
-   Keep side-by-side; reduce padding; vertically centre content  */
+   Keep side-by-side; reduce padding                             */
 @media (max-width: 991px) {
-  .mds-hero__inner {
+  .mds-hero-v2__row,
+  .mds-hero-v2 .main-slider-one__item {
     min-height: 80vh;
   }
 
-  .mds-hero__content {
-    flex: 0 0 54%;
-    max-width: 54%;
+  .mds-hero-v2__left {
     padding: 110px 32px 60px 40px;
-    align-items: center;          /* centre vertically on tablet */
-  }
-
-  .mds-hero__image {
-    flex: 0 0 46%;
-    max-width: 46%;
+    align-items: center;
   }
 }
 
 /* ── Mobile / tablet portrait: ≤ 767px ─────────────────────────
-   Stack vertically: image on top (face visible first), text below */
+   Stack vertically: image first (face visible), text below      */
 @media (max-width: 767px) {
-  .mds-hero__inner {
-    flex-direction: column;
+  .mds-hero-v2__row,
+  .mds-hero-v2 .main-slider-one__item {
     min-height: auto;
   }
 
-  /* Image renders first so the face is immediately seen */
-  .mds-hero__image {
+  /* Pull image to top of stack */
+  .mds-hero-v2__right {
     order: -1;
-    flex: none;
-    width: 100%;
-    max-width: 100%;
+    min-height: 0;
     height: 420px;
   }
 
-  /* Left-to-right blend not needed in stacked layout */
-  .mds-hero__image::before {
+  /* Left-to-right blend not needed when stacked */
+  .mds-hero-v2__right::before {
     display: none;
   }
 
-  .mds-hero__content {
-    flex: none;
-    width: 100%;
-    max-width: 100%;
+  .mds-hero-v2__left {
     padding: 48px 32px 52px;
     align-items: flex-start;
   }
 
-  /* Gold left bar removed on mobile (no room) */
-  .mds-hero__content::after {
+  /* Gold left bar removed on mobile */
+  .mds-hero-v2__left::after {
     display: none;
   }
 
-  .mds-hero__content-inner {
-    max-width: 100%;
-  }
-
-  .mds-hero__text {
-    max-width: 100%;
+  .mds-hero-v2__content {
+    max-width: 100% !important;
   }
 }
 
 /* ── Small mobile: ≤ 575px ──────────────────────────────────── */
 @media (max-width: 575px) {
-  .mds-hero__image {
+  .mds-hero-v2__right {
     height: 350px;
   }
 
-  .mds-hero__content {
+  .mds-hero-v2__left {
     padding: 36px 20px 44px;
   }
 }
 
 /* ── Extra-small: ≤ 400px (supports 320px minimum) ─────────── */
 @media (max-width: 400px) {
-  .mds-hero__image {
+  .mds-hero-v2__right {
     height: 280px;
   }
 }
