@@ -164,35 +164,32 @@
 
         <main id="main-content">
 
-        <!-- ===== HERO — main-slider-one adapted as two-column safe-zone ===== -->
-        <section class="main-slider-one mds-hero-v2" id="home">
-            <div class="main-slider-one__item">
-                <div class="container-fluid px-0">
-                    <div class="row g-0 mds-hero-v2__row">
+        <!-- ===== HERO — Safe-zone two-column layout ===== -->
+        <section class="mds-hero" id="home">
+            <div class="mds-hero__inner">
 
-                        <!-- Left: text safe zone — content never overlaps the face -->
-                        <div class="col-12 col-md-7 col-lg-6 d-flex align-items-end mds-hero-v2__left">
-                            <div class="main-slider-one__content mds-hero-v2__content">
-                                <p class="mds-hero__tagline">Attorneys-at-Law &middot; Port Antonio, Jamaica</p>
-                                <h1 class="main-slider-one__title">Trusted Legal Representation in Port Antonio, Portland</h1>
-                                <p class="main-slider-one__text">12+ years of trusted legal representation serving Port Antonio, Portland, Jamaica.</p>
-                                <div class="main-slider-one__btn">
-                                    <a href="#services" class="procounsel-btn"><i>Explore Our Services</i><span>Explore Our Services</span></a>
-                                </div>
-                            </div>
-                        </div><!-- /.col left -->
+                <!-- Left: image zone -->
+                <div class="mds-hero__image">
+                    <img src="assets/images/mds/monique-headshot.jpg"
+                         alt="Monique D. Scott, LLB (Hons.) — Attorney-at-Law, Port Antonio, Portland, Jamaica"
+                         fetchpriority="high"
+                         decoding="async" />
+                </div><!-- /.mds-hero__image -->
 
-                        <!-- Right: Monique's image (face anchored to centre) -->
-                        <div class="col-12 col-md-5 col-lg-6 mds-hero-v2__right">
-                            <img src="assets/images/mds/monique-hero-section-images.jpg"
-                                 alt="Monique D. Scott, LLB (Hons.) — Attorney-at-Law, Port Antonio, Portland, Jamaica"
-                                 fetchpriority="high" decoding="async" />
-                        </div><!-- /.col right -->
+                <!-- Right: content zone -->
+                <div class="mds-hero__content">
+                    <div class="mds-hero__content-inner">
+                        <p class="mds-hero__tagline">Attorneys-at-Law &middot; Port Antonio, Jamaica</p>
+                        <h1 class="mds-hero__title">Trusted Legal Representation in Port Antonio, Portland</h1>
+                        <p class="mds-hero__text">12+ years of trusted legal representation serving Port Antonio, Portland, Jamaica.</p>
+                        <div class="mds-hero__btn">
+                            <a href="#services" class="procounsel-btn"><i>Explore Our Services</i><span>Explore Our Services</span></a>
+                        </div>
+                    </div>
+                </div><!-- /.mds-hero__content -->
 
-                    </div><!-- /.row -->
-                </div><!-- /.container-fluid -->
-            </div><!-- /.main-slider-one__item -->
-        </section><!-- /.main-slider-one.mds-hero-v2 -->
+            </div><!-- /.mds-hero__inner -->
+        </section><!-- /.mds-hero -->
         <!-- hero-end -->
 
 
@@ -233,8 +230,13 @@
                 <div class="row">
                     <div class="col-lg-5">
                         <div class="about-one__image wow fadeInLeft" data-wow-delay="00ms">
-                            <!-- PHOTO: Monique D. Scott professional headshot — replace about-1-1.png with assets/images/mds/monique-headshot.jpg -->
-                            <img src="assets/images/mds/monique-headshot.jpg" alt="Monique D. Scott, LLB (Hons.) — Attorney-at-Law, Port Antonio, Portland, Jamaica" width="3283" height="4104" loading="lazy" decoding="async" style="border-radius:4px; width:100%; display:block;">
+                            <img src="assets/images/mds/monique-office.jpg"
+                                 alt="Monique D. Scott in her office, Port Antonio, Portland, Jamaica"
+                                 width="3283"
+                                 height="4104"
+                                 loading="lazy"
+                                 decoding="async"
+                                 style="border-radius:4px; width:100%; display:block;" />
                         </div><!-- /.about-one__image -->
                     </div><!-- /.col-lg-5 -->
                     <div class="col-lg-7 wow fadeInRight" data-wow-delay="300ms">
