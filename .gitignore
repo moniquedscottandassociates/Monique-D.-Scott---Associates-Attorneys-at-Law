@@ -18,3 +18,6 @@ npm-debug.log*
 # Deployment notes / internal docs — keep out of public repo
 DEPLOYMENT-SOP.md
 "Monique D. Scott & Associates Website Plan.docx"
+
+# CSS backup files — local working copies, not for production
+*back up*.css
