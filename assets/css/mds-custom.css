@@ -186,6 +186,12 @@ body.boxed-wrapper .page-wrapper {
   border-bottom: none;
 }
 
+/* ─── Header logo — desktop size ────────────────────────────────── */
+.main-header__logo img {
+  height: 60px;
+  width: auto;
+}
+
 .main-header__info,
 .work-process-one__item__icon::after {
   border-color: rgba(var(--procounsel-white-rgb), 0.2);
@@ -876,8 +882,8 @@ address {
   }
 
   .main-header__logo img {
-    width: 120px;
-    height: auto;
+    height: 52px;
+    width: auto;
   }
 
   .mds-hero,
@@ -919,8 +925,8 @@ address {
   }
 
   .main-header__logo img {
-    width: 105px;
-    height: auto;
+    height: 48px;
+    width: auto;
     display: block;
   }
 
@@ -1010,7 +1016,8 @@ address {
   }
 
   .main-header__logo img {
-    width: 96px;
+    height: 44px;
+    width: auto;
   }
 
   .mds-hero__image {
@@ -1049,4 +1056,24 @@ address {
 
 .mds-footer-credit a:hover {
   opacity: 0.85;
+}
+@media (max-width: 767px) {
+
+  .mds-hero {
+    padding-top: 0 !important;
+    min-height: auto;
+  }
+
+  .mds-hero__image {
+    margin-top: -20px !important;
+  }
+
+}
+
+@media (max-width: 575px) {
+
+  .mds-hero__image {
+    margin-top: -26px !important;
+  }
+
 }
