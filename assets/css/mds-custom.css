@@ -187,26 +187,34 @@ body.boxed-wrapper .page-wrapper {
 }
 
 /* ─── Logo sizing — desktop ─────────────────────────────────────── */
-/* Container: flex-centred, capped width, never overflows header     */
 .main-header__logo {
   display: flex;
   align-items: center;
-  max-width: 280px;
+  justify-content: flex-start;
   flex-shrink: 0;
+  width: 100%;
+  max-width: 420px;
+  overflow: hidden;
+}
+
+.main-header__logo a {
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .main-header__logo img {
   display: block;
-  height: 160px;
   width: auto;
+  height: 220px;
   max-width: 100%;
   object-fit: contain;
 }
 
-/* Sticky (scrolled) state — slightly smaller to respect viewport    */
+/* Sticky (scrolled) state */
 .sticky-header .main-header__logo img,
 .main-header.sticky-header--one-page .main-header__logo img {
-  height: 130px;
+  height: 180px;
   width: auto;
   max-width: 100%;
   object-fit: contain;
@@ -214,12 +222,13 @@ body.boxed-wrapper .page-wrapper {
 
 @media (max-width: 1199px) {
   .main-header__logo {
-    max-width: 240px;
+    max-width: 340px;
   }
+
   .main-header__logo img,
   .sticky-header .main-header__logo img,
   .main-header.sticky-header--one-page .main-header__logo img {
-    height: 130px;
+    height: 170px;
   }
 }
 
@@ -916,17 +925,13 @@ address {
   }
 
   .main-header__logo {
-    position: relative;
-    z-index: 20;
-    padding-top: 4px;
-    max-width: 200px;
+    max-width: 260px;
   }
 
-  .main-header__logo img {
-    height: 110px;
-    width: auto;
-    max-width: 100%;
-    object-fit: contain;
+  .main-header__logo img,
+  .sticky-header .main-header__logo img,
+  .main-header.sticky-header--one-page .main-header__logo img {
+    height: 130px;
   }
 
   .mds-hero,
@@ -954,30 +959,26 @@ address {
   }
 
   .main-header__inner {
-    min-height: 76px;
+    min-height: 96px;
     padding-top: 10px;
     padding-bottom: 10px;
     align-items: center;
   }
 
   .main-header__logo {
-    position: relative;
-    z-index: 30;
+    max-width: 220px;
     padding-top: 0;
-    margin-top: 0;
-    max-width: 160px;
   }
 
   .main-header__logo img {
-    height: 90px;
+    height: 110px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
-    display: block;
   }
 
   .mobile-nav__content .logo-box img {
-    height: 110px;
+    height: 120px;
     width: auto;
     max-width: 100%;
     object-fit: contain;
@@ -1069,14 +1070,15 @@ address {
   }
 
   .main-header__logo {
-    max-width: 130px;
+    max-width: 180px;
   }
 
   .main-header__logo img {
-    height: 76px;
-    width: auto;
-    max-width: 100%;
-    object-fit: contain;
+    height: 92px;
+  }
+
+  .mobile-nav__content .logo-box img {
+    height: 100px;
   }
 
   .mds-hero__image {
