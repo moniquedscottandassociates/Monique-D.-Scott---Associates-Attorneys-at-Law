@@ -186,23 +186,50 @@ body.boxed-wrapper .page-wrapper {
   border-bottom: none;
 }
 
-/* ─── Logo sizing — desktop and shared resets ───────────────────── */
-.main-header__logo img,
+/* ─── Logo sizing — desktop ─────────────────────────────────────── */
+/* Container: flex-centred, capped width, never overflows header     */
+.main-header__logo {
+  display: flex;
+  align-items: center;
+  max-width: 280px;
+  flex-shrink: 0;
+}
+
+.main-header__logo img {
+  display: block;
+  height: 160px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+/* Sticky (scrolled) state — slightly smaller to respect viewport    */
+.sticky-header .main-header__logo img,
+.main-header.sticky-header--one-page .main-header__logo img {
+  height: 130px;
+  width: auto;
+  max-width: 100%;
+  object-fit: contain;
+}
+
+@media (max-width: 1199px) {
+  .main-header__logo {
+    max-width: 240px;
+  }
+  .main-header__logo img,
+  .sticky-header .main-header__logo img,
+  .main-header.sticky-header--one-page .main-header__logo img {
+    height: 130px;
+  }
+}
+
+/* ─── Footer and mobile-nav logo resets ────────────────────────── */
 .footer-widget__logo img,
 .mobile-nav__content .logo-box img {
   width: auto;
   height: auto;
   display: block;
-}
-
-.main-header__logo img {
-  max-height: 72px;
-}
-
-@media (max-width: 1199px) {
-  .main-header__logo img {
-    max-height: 64px;
-  }
+  object-fit: contain;
 }
 
 .main-header__info,
@@ -891,13 +918,15 @@ address {
   .main-header__logo {
     position: relative;
     z-index: 20;
-    padding-top: 8px;
+    padding-top: 4px;
+    max-width: 200px;
   }
 
   .main-header__logo img {
-    max-height: 56px;
-    height: auto;
+    height: 110px;
     width: auto;
+    max-width: 100%;
+    object-fit: contain;
   }
 
   .mds-hero,
@@ -936,18 +965,22 @@ address {
     z-index: 30;
     padding-top: 0;
     margin-top: 0;
+    max-width: 160px;
   }
 
   .main-header__logo img {
-    max-height: 52px;
-    height: auto;
+    height: 90px;
     width: auto;
+    max-width: 100%;
+    object-fit: contain;
     display: block;
   }
 
   .mobile-nav__content .logo-box img {
-    max-height: 72px;
+    height: 110px;
     width: auto;
+    max-width: 100%;
+    object-fit: contain;
   }
 
   .mobile-nav__btn {
@@ -1035,10 +1068,15 @@ address {
     min-height: 72px;
   }
 
+  .main-header__logo {
+    max-width: 130px;
+  }
+
   .main-header__logo img {
-    max-height: 46px;
-    height: auto;
+    height: 76px;
     width: auto;
+    max-width: 100%;
+    object-fit: contain;
   }
 
   .mds-hero__image {
