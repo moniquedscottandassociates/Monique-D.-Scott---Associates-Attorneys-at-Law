@@ -186,6 +186,36 @@ body.boxed-wrapper .page-wrapper {
   border-bottom: none;
 }
 
+/* ─── Header right-side — prevent phone number wrapping ─────────── */
+.main-header__right {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  flex-shrink: 0;
+}
+
+.main-header__info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  min-width: 170px;
+  flex-shrink: 0;
+}
+
+.main-header__info > div:last-child {
+  display: flex;
+  flex-direction: column;
+}
+
+.main-header__info__text {
+  white-space: nowrap;
+}
+
+.main-header__info a {
+  white-space: nowrap;
+  display: inline-block;
+}
+
 /* ─── Logo sizing — desktop ─────────────────────────────────────── */
 .main-header__logo {
   display: flex;
