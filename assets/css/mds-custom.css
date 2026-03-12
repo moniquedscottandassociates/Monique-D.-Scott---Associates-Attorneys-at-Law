@@ -186,10 +186,23 @@ body.boxed-wrapper .page-wrapper {
   border-bottom: none;
 }
 
-/* ─── Header logo — desktop size ────────────────────────────────── */
-.main-header__logo img {
-  height: 60px;
+/* ─── Logo sizing — desktop and shared resets ───────────────────── */
+.main-header__logo img,
+.footer-widget__logo img,
+.mobile-nav__content .logo-box img {
   width: auto;
+  height: auto;
+  display: block;
+}
+
+.main-header__logo img {
+  max-height: 72px;
+}
+
+@media (max-width: 1199px) {
+  .main-header__logo img {
+    max-height: 64px;
+  }
 }
 
 .main-header__info,
@@ -882,7 +895,8 @@ address {
   }
 
   .main-header__logo img {
-    height: 52px;
+    max-height: 56px;
+    height: auto;
     width: auto;
   }
 
@@ -925,9 +939,15 @@ address {
   }
 
   .main-header__logo img {
-    height: 48px;
+    max-height: 52px;
+    height: auto;
     width: auto;
     display: block;
+  }
+
+  .mobile-nav__content .logo-box img {
+    max-height: 72px;
+    width: auto;
   }
 
   .mobile-nav__btn {
@@ -1016,7 +1036,8 @@ address {
   }
 
   .main-header__logo img {
-    height: 44px;
+    max-height: 46px;
+    height: auto;
     width: auto;
   }
 
