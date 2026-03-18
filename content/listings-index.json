@@ -1,0 +1,28 @@
+[
+  {
+    "slug": "commercial-office-space-port-antonio",
+    "title": "Commercial Office Space — East Port Commercial Complex, Port Antonio",
+    "listing_type": "For Rent",
+    "price": "Price on Request",
+    "location": "21 West Palm Ave, Port Antonio, Portland",
+    "parish": "Portland",
+    "summary": "Professional office space available for rent in the heart of Port Antonio. Suitable for legal, medical, financial, or general business use.",
+    "featured_image": "",
+    "gallery": "[]",
+    "status": "available",
+    "featured": true
+  },
+  {
+    "slug": "residential-land-portland",
+    "title": "Residential Land for Sale — Portland Parish",
+    "listing_type": "Land",
+    "price": "Price on Request",
+    "location": "Portland Parish, Jamaica",
+    "parish": "Portland",
+    "summary": "Cleared residential land available for sale in Portland Parish. A solid investment opportunity in one of Jamaica's most scenic parishes.",
+    "featured_image": "",
+    "gallery": "[]",
+    "status": "available",
+    "featured": false
+  }
+]

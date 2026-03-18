@@ -1,0 +1,529 @@
+/* ============================================================
+   MDS CMS Styles
+   Monique D. Scott & Associates — CMS / Multi-page Components
+   ============================================================ */
+
+/* ── Page Hero (inner pages) ───────────────────────────────── */
+.mds-page-hero {
+    background-color: #0A1545;
+    padding: 130px 0 64px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+}
+.mds-page-hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(0, 40, 184, 0.18) 0%, transparent 65%);
+    pointer-events: none;
+}
+.mds-page-hero__inner {
+    position: relative;
+    z-index: 1;
+}
+.mds-page-hero__breadcrumb {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 13px;
+    margin-bottom: 14px;
+    letter-spacing: 0.04em;
+}
+.mds-page-hero__breadcrumb a {
+    color: #c7954a;
+    text-decoration: none;
+}
+.mds-page-hero__breadcrumb a:hover { text-decoration: underline; }
+.mds-page-hero__breadcrumb span { margin: 0 8px; opacity: 0.5; }
+.mds-page-hero__title {
+    font-family: var(--procounsel-heading-font, 'Marcellus', serif);
+    color: #fff;
+    font-size: 44px;
+    line-height: 1.2;
+    margin-bottom: 14px;
+}
+.mds-page-hero__subtitle {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 16px;
+    max-width: 580px;
+    margin: 0 auto;
+    line-height: 1.7;
+}
+
+/* ── Publication Cards ─────────────────────────────────────── */
+.mds-pub-card {
+    background-color: #0A1545;
+    border: 1px solid rgba(199, 149, 74, 0.15);
+    border-radius: 6px;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.mds-pub-card:hover {
+    border-color: rgba(199, 149, 74, 0.6);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+.mds-pub-card__image {
+    position: relative;
+    height: 195px;
+    background-color: #162252;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+.mds-pub-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.mds-pub-card:hover .mds-pub-card__image img { transform: scale(1.04); }
+.mds-pub-card__image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: rgba(255, 255, 255, 0.12);
+    font-size: 52px;
+}
+.mds-pub-card__category {
+    position: absolute;
+    top: 14px;
+    left: 14px;
+    background-color: #c7954a;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 10px;
+    border-radius: 3px;
+}
+.mds-pub-card__body {
+    padding: 24px 26px 28px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.mds-pub-card__date {
+    color: rgba(255, 255, 255, 0.35);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 10px;
+}
+.mds-pub-card__title {
+    font-family: var(--procounsel-heading-font, 'Marcellus', serif);
+    color: #fff;
+    font-size: 18px;
+    line-height: 1.45;
+    margin-bottom: 12px;
+}
+.mds-pub-card__summary {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 14px;
+    line-height: 1.75;
+    margin-bottom: 22px;
+    flex: 1;
+}
+.mds-pub-card__link {
+    color: #c7954a;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.3s ease, color 0.3s ease;
+    margin-top: auto;
+}
+.mds-pub-card__link:hover { color: #d4a96c; gap: 13px; }
+
+/* ── Filter Bar ────────────────────────────────────────────── */
+.mds-filter-bar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-bottom: 44px;
+}
+.mds-filter-btn {
+    background: transparent;
+    border: 1px solid rgba(199, 149, 74, 0.35);
+    color: rgba(255, 255, 255, 0.65);
+    padding: 8px 22px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background-color 0.25s, border-color 0.25s, color 0.25s;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+.mds-filter-btn:hover,
+.mds-filter-btn.active {
+    background-color: #c7954a;
+    border-color: #c7954a;
+    color: #fff;
+}
+
+/* ── Loading / Empty State ─────────────────────────────────── */
+.mds-state {
+    text-align: center;
+    padding: 70px 0;
+    color: rgba(255, 255, 255, 0.4);
+}
+.mds-state i { font-size: 36px; display: block; margin-bottom: 16px; color: #c7954a; }
+.mds-state p { font-size: 15px; margin: 0; }
+
+/* ── Publication Single / Article ──────────────────────────── */
+.mds-article-wrap {
+    max-width: 820px;
+    margin: 0 auto;
+}
+.mds-article__back {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: #c7954a;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    text-decoration: none;
+    margin-bottom: 32px;
+    transition: gap 0.3s;
+}
+.mds-article__back:hover { gap: 13px; color: #d4a96c; }
+.mds-article__category {
+    display: inline-block;
+    background-color: #c7954a;
+    color: #fff;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    padding: 4px 12px;
+    border-radius: 3px;
+    margin-bottom: 18px;
+}
+.mds-article__title {
+    font-family: var(--procounsel-heading-font, 'Marcellus', serif);
+    color: #fff;
+    font-size: 38px;
+    line-height: 1.25;
+    margin-bottom: 14px;
+}
+.mds-article__meta {
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 13px;
+    margin-bottom: 32px;
+}
+.mds-article__feat-img {
+    width: 100%;
+    max-height: 420px;
+    object-fit: cover;
+    border-radius: 6px;
+    margin-bottom: 40px;
+    display: block;
+}
+.mds-article__body {
+    color: rgba(255, 255, 255, 0.78);
+    font-size: 16px;
+    line-height: 1.9;
+}
+.mds-article__body h1,
+.mds-article__body h2,
+.mds-article__body h3,
+.mds-article__body h4 {
+    font-family: var(--procounsel-heading-font, 'Marcellus', serif);
+    color: #fff;
+    margin-top: 36px;
+    margin-bottom: 14px;
+}
+.mds-article__body h2 { font-size: 26px; }
+.mds-article__body h3 { font-size: 21px; }
+.mds-article__body p  { margin-bottom: 20px; }
+.mds-article__body a  { color: #c7954a; }
+.mds-article__body a:hover { color: #d4a96c; }
+.mds-article__body ul,
+.mds-article__body ol { margin-bottom: 20px; padding-left: 22px; }
+.mds-article__body li { margin-bottom: 8px; }
+.mds-article__body blockquote {
+    border-left: 3px solid #c7954a;
+    padding: 14px 22px;
+    margin: 28px 0;
+    background-color: rgba(199, 149, 74, 0.07);
+    color: rgba(255, 255, 255, 0.7);
+    font-style: italic;
+}
+.mds-article__body strong { color: rgba(255, 255, 255, 0.95); }
+.mds-article__download {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 40px;
+    background-color: #c7954a;
+    color: #fff;
+    padding: 13px 28px;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    transition: background-color 0.3s;
+}
+.mds-article__download:hover { background-color: #b5843a; color: #fff; text-decoration: none; }
+
+/* ── Listing Cards ─────────────────────────────────────────── */
+.mds-listing-card {
+    background-color: #0A1545;
+    border: 1px solid rgba(199, 149, 74, 0.15);
+    border-radius: 6px;
+    overflow: hidden;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    transition: border-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+}
+.mds-listing-card:hover {
+    border-color: rgba(199, 149, 74, 0.6);
+    transform: translateY(-5px);
+    box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
+}
+.mds-listing-card__image {
+    height: 215px;
+    overflow: hidden;
+    position: relative;
+    background-color: #162252;
+    flex-shrink: 0;
+}
+.mds-listing-card__image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s ease;
+}
+.mds-listing-card:hover .mds-listing-card__image img { transform: scale(1.04); }
+.mds-listing-card__image-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: rgba(255,255,255,0.12);
+    font-size: 52px;
+}
+.mds-listing-card__badge {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    background-color: #c7954a;
+    color: #fff;
+    font-size: 10px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 4px 10px;
+    border-radius: 3px;
+}
+.mds-listing-card__body {
+    padding: 22px 24px 26px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.mds-listing-card__price {
+    font-family: var(--procounsel-heading-font, 'Marcellus', serif);
+    color: #c7954a;
+    font-size: 22px;
+    margin-bottom: 8px;
+}
+.mds-listing-card__title {
+    font-family: var(--procounsel-heading-font, 'Marcellus', serif);
+    color: #fff;
+    font-size: 16px;
+    line-height: 1.4;
+    margin-bottom: 8px;
+}
+.mds-listing-card__location {
+    color: rgba(255, 255, 255, 0.45);
+    font-size: 12px;
+    margin-bottom: 13px;
+}
+.mds-listing-card__summary {
+    color: rgba(255, 255, 255, 0.6);
+    font-size: 13px;
+    line-height: 1.75;
+    margin-bottom: 20px;
+    flex: 1;
+}
+.mds-listing-card__link {
+    color: #c7954a;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: gap 0.3s ease, color 0.3s ease;
+    margin-top: auto;
+}
+.mds-listing-card__link:hover { color: #d4a96c; gap: 13px; }
+
+/* ── Listing Single ────────────────────────────────────────── */
+.mds-property-detail {
+    background-color: #0A1545;
+    border: 1px solid rgba(199, 149, 74, 0.15);
+    border-radius: 6px;
+    padding: 32px;
+}
+.mds-property-detail h3 {
+    font-family: var(--procounsel-heading-font, 'Marcellus', serif);
+    color: #fff;
+    font-size: 18px;
+    margin-bottom: 18px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(199, 149, 74, 0.2);
+}
+.mds-property-meta {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 24px;
+}
+.mds-property-meta li {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 9px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.65);
+}
+.mds-property-meta li:last-child { border-bottom: none; }
+.mds-property-meta__label { color: rgba(255, 255, 255, 0.4); font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em; }
+.mds-property-meta__val  { color: #fff; font-weight: 600; text-align: right; }
+.mds-gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 12px;
+    margin-top: 24px;
+}
+.mds-gallery img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: transform 0.3s, opacity 0.3s;
+}
+.mds-gallery img:hover { transform: scale(1.03); opacity: 0.92; }
+
+/* ── Intake Cards (homepage preview + full page) ───────────── */
+.mds-intake-card {
+    display: block;
+    background-color: #0A1545;
+    border: 1px solid rgba(199, 149, 74, 0.15);
+    border-radius: 6px;
+    padding: 32px 26px 28px;
+    text-decoration: none;
+    height: 100%;
+    transition: border-color 0.3s ease, transform 0.3s ease, background-color 0.3s ease;
+}
+.mds-intake-card:hover {
+    border-color: rgba(199, 149, 74, 0.6);
+    background-color: #0d1c4e;
+    transform: translateY(-5px);
+    text-decoration: none;
+}
+.mds-intake-card .practice-icon { margin-bottom: 20px; }
+.mds-intake-card__title {
+    font-family: var(--procounsel-heading-font, 'Marcellus', serif);
+    color: #fff;
+    font-size: 17px;
+    line-height: 1.45;
+    margin-bottom: 10px;
+}
+.mds-intake-card__text {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 13px;
+    line-height: 1.75;
+    margin-bottom: 18px;
+}
+.mds-intake-card__cta {
+    color: #c7954a;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    transition: gap 0.3s ease;
+}
+.mds-intake-card:hover .mds-intake-card__cta { gap: 12px; }
+
+/* ── Registration Form ─────────────────────────────────────── */
+.mds-registration-section {
+    background-color: #0A1545;
+    border: 1px solid rgba(199, 149, 74, 0.15);
+    border-radius: 8px;
+    padding: 48px;
+}
+.mds-form-section-title {
+    font-family: var(--procounsel-heading-font, 'Marcellus', serif);
+    color: #fff;
+    font-size: 22px;
+    margin-bottom: 28px;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(199, 149, 74, 0.2);
+}
+.mds-consent-label {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 13px;
+    line-height: 1.6;
+    cursor: pointer;
+}
+.mds-consent-label input[type="checkbox"] {
+    margin-top: 3px;
+    flex-shrink: 0;
+    accent-color: #c7954a;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+/* ── Homepage Publications Preview Section ─────────────────── */
+.mds-publications-preview {
+    background-color: #0A1545;
+    padding: 90px 0;
+}
+
+/* ── Homepage Registration Preview Section ─────────────────── */
+.mds-intake-preview {
+    background-color: #1A1A2E;
+    padding: 90px 0;
+}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media (max-width: 991px) {
+    .mds-page-hero { padding: 110px 0 50px; }
+    .mds-page-hero__title { font-size: 34px; }
+    .mds-registration-section { padding: 36px 28px; }
+}
+@media (max-width: 767px) {
+    .mds-page-hero { padding: 95px 0 44px; }
+    .mds-page-hero__title { font-size: 28px; }
+    .mds-article__title { font-size: 26px; }
+    .mds-registration-section { padding: 24px 16px; }
+    .mds-publications-preview,
+    .mds-intake-preview { padding: 60px 0; }
+}

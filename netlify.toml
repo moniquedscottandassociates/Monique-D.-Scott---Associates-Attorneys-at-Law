@@ -1,14 +1,42 @@
+# ============================================================
+# Netlify Configuration — Monique D. Scott & Associates
+# ============================================================
+
 [build]
+  # Generates content/publications-index.json and content/listings-index.json
+  # from the markdown files in content/publications/ and content/listings/.
+  # Pure Node.js — no npm install required.
+  command = "node scripts/build-indexes.js"
   publish = "."
 
+# ── Forms ────────────────────────────────────────────────────
+# Netlify auto-detects forms from HTML.
+# After first deploy, configure email notifications:
+#   Dashboard → Forms → "contact" → Email notification → moniquescottlaw@hotmail.com
+#   Dashboard → Forms → "intake"  → Email notification → moniquescottlaw@hotmail.com
+
+# ── Redirects ────────────────────────────────────────────────
 [[redirects]]
-  from = "/thank-you"
-  to   = "/"
+  from   = "/thank-you"
+  to     = "/"
   status = 302
 
+# ── Security Headers ─────────────────────────────────────────
 [[headers]]
   for = "/*"
   [headers.values]
-    X-Frame-Options = "SAMEORIGIN"
+    X-Frame-Options        = "SAMEORIGIN"
     X-Content-Type-Options = "nosniff"
-    Referrer-Policy = "strict-origin-when-cross-origin"
+    Referrer-Policy        = "strict-origin-when-cross-origin"
+
+# Cache static assets aggressively
+[[headers]]
+  for = "/assets/vendors/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"
+
+# Never cache JSON indexes (regenerated on every build)
+[[headers]]
+  for = "/content/*.json"
+  [headers.values]
+    Cache-Control = "public, max-age=0, must-revalidate"

@@ -1,0 +1,126 @@
+# ============================================================
+# Decap CMS Configuration
+# Monique D. Scott & Associates Attorneys-at-Law
+# ============================================================
+
+backend:
+  name: github
+  repo: bestjamaicanexperience/Monique-D.-Scott---Associates-Attorneys-at-Law
+  branch: main
+
+# Media / file uploads
+media_folder: "assets/uploads"
+public_folder: "/assets/uploads"
+
+# Show media library in the CMS
+media_library:
+  name: default
+
+# ============================================================
+# COLLECTIONS
+# ============================================================
+collections:
+
+  # ----------------------------------------------------------
+  # PUBLICATIONS
+  # ----------------------------------------------------------
+  - name: "publications"
+    label: "Publications"
+    label_singular: "Publication"
+    folder: "content/publications"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    preview_path: "/publication-single.html?slug={{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Title", name: "title", widget: "string", hint: "Publication title shown on cards and the article page." }
+      - { label: "Publish Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, default: "" }
+      - label: "Category"
+        name: "category"
+        widget: "select"
+        options:
+          - { label: "Legal Update", value: "Legal Update" }
+          - { label: "Newsletter", value: "Newsletter" }
+          - { label: "Firm News", value: "Firm News" }
+          - { label: "Case Study", value: "Case Study" }
+          - { label: "Press Release", value: "Press Release" }
+          - { label: "Client Advisory", value: "Client Advisory" }
+        default: "Legal Update"
+      - { label: "Summary", name: "summary", widget: "text", hint: "Short description shown on listing cards (1–2 sentences)." }
+      - { label: "Featured Image", name: "featured_image", widget: "image", required: false, hint: "Optional card/header image." }
+      - { label: "Document / PDF", name: "document_file", widget: "file", required: false, hint: "Optional downloadable file (PDF, DOCX, etc.).", allow_multiple: false }
+      - { label: "Article Body", name: "body", widget: "markdown" }
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: false, hint: "Show in the homepage Publications preview (latest 3 featured items appear)." }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "Published", value: "published" }
+          - { label: "Draft", value: "draft" }
+        default: "published"
+
+  # ----------------------------------------------------------
+  # PROPERTY LISTINGS
+  # ----------------------------------------------------------
+  - name: "listings"
+    label: "Property Listings"
+    label_singular: "Listing"
+    folder: "content/listings"
+    create: true
+    delete: true
+    slug: "{{slug}}"
+    preview_path: "/listing-single.html?slug={{slug}}"
+    editor:
+      preview: false
+    fields:
+      - { label: "Property Title", name: "title", widget: "string" }
+      - label: "Listing Type"
+        name: "listing_type"
+        widget: "select"
+        options:
+          - { label: "For Sale", value: "For Sale" }
+          - { label: "For Rent", value: "For Rent" }
+          - { label: "Commercial", value: "Commercial" }
+          - { label: "Land", value: "Land" }
+        default: "For Sale"
+      - { label: "Price / Rate", name: "price", widget: "string", hint: 'e.g. "$45,000 JMD/month" or "Price on request"' }
+      - { label: "Location", name: "location", widget: "string", hint: 'e.g. "Port Antonio, Portland"' }
+      - label: "Parish"
+        name: "parish"
+        widget: "select"
+        options:
+          - Kingston
+          - "St. Andrew"
+          - "St. Thomas"
+          - Portland
+          - "St. Mary"
+          - "St. Ann"
+          - Trelawny
+          - "St. James"
+          - Hanover
+          - Westmoreland
+          - "St. Elizabeth"
+          - Manchester
+          - Clarendon
+          - "St. Catherine"
+        default: Portland
+      - { label: "Summary", name: "summary", widget: "text", hint: "Short description for listing cards." }
+      - { label: "Featured Image", name: "featured_image", widget: "image", required: false }
+      - label: "Gallery"
+        name: "gallery"
+        widget: "list"
+        required: false
+        field: { label: "Image", name: "image", widget: "image" }
+      - label: "Status"
+        name: "status"
+        widget: "select"
+        options:
+          - { label: "Available", value: "available" }
+          - { label: "Pending", value: "pending" }
+          - { label: "Sold / Let", value: "sold" }
+          - { label: "Draft", value: "draft" }
+        default: "available"
+      - { label: "Full Description", name: "body", widget: "markdown" }
+      - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: false }

@@ -3,10 +3,37 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://www.sitemaps.org/schemas/sitemap/0.9
         http://www.sitemaps.org/schemas/sitemap/0.9/sitemap.xsd">
+
+  <!-- Homepage -->
   <url>
     <loc>https://moniquedscottandassociates.com/</loc>
-    <lastmod>2026-03-11</lastmod>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
+
+  <!-- Publications listing -->
+  <url>
+    <loc>https://moniquedscottandassociates.com/publications.html</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Property Listings -->
+  <url>
+    <loc>https://moniquedscottandassociates.com/listings.html</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+  <!-- Client Intake / Registration -->
+  <url>
+    <loc>https://moniquedscottandassociates.com/registration.html</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
 </urlset>
