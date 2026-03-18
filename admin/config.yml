@@ -12,10 +12,6 @@ backend:
 media_folder: "assets/uploads"
 public_folder: "/assets/uploads"
 
-# Show media library in the CMS
-media_library:
-  name: default
-
 # ============================================================
 # COLLECTIONS
 # ============================================================
@@ -50,7 +46,7 @@ collections:
         default: "Legal Update"
       - { label: "Summary", name: "summary", widget: "text", hint: "Short description shown on listing cards (1–2 sentences)." }
       - { label: "Featured Image", name: "featured_image", widget: "image", required: false, hint: "Optional card/header image." }
-      - { label: "Document / PDF", name: "document_file", widget: "file", required: false, hint: "Optional downloadable file (PDF, DOCX, etc.).", allow_multiple: false }
+      - { label: "Document / PDF", name: "document_file", widget: "file", required: false, hint: "Optional downloadable file (PDF, DOCX, etc.)." }
       - { label: "Article Body", name: "body", widget: "markdown" }
       - { label: "Featured on Homepage", name: "featured", widget: "boolean", default: false, hint: "Show in the homepage Publications preview (latest 3 featured items appear)." }
       - label: "Status"

@@ -16,6 +16,15 @@
 #   Dashboard → Forms → "intake"  → Email notification → moniquescottlaw@hotmail.com
 
 # ── Redirects ────────────────────────────────────────────────
+
+# Force trailing slash on /admin so Decap CMS resolves config.yml correctly.
+# Without this, /admin (no slash) causes the CMS to fetch /config.yml instead of /admin/config.yml.
+[[redirects]]
+  from   = "/admin"
+  to     = "/admin/"
+  status = 301
+  force  = true
+
 [[redirects]]
   from   = "/thank-you"
   to     = "/"
