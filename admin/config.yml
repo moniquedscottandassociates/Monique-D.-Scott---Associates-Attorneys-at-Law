@@ -32,7 +32,7 @@ collections:
       preview: false
     fields:
       - { label: "Title", name: "title", widget: "string", hint: "Publication title shown on cards and the article page." }
-      - { label: "Publish Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false, default: "" }
+      - { label: "Publish Date", name: "date", widget: "datetime", date_format: "YYYY-MM-DD", time_format: false }
       - label: "Category"
         name: "category"
         widget: "select"

@@ -38,6 +38,14 @@
     X-Content-Type-Options = "nosniff"
     Referrer-Policy        = "strict-origin-when-cross-origin"
 
+# Ensure YAML config is served with correct Content-Type
+# Required when X-Content-Type-Options: nosniff is set —
+# prevents browsers rejecting the file if served as octet-stream.
+[[headers]]
+  for = "/admin/config.yml"
+  [headers.values]
+    Content-Type = "text/yaml; charset=utf-8"
+
 # Cache static assets aggressively
 [[headers]]
   for = "/assets/vendors/*"
