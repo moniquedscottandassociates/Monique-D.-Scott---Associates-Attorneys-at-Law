@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Dashboard | Monique D. Scott &amp; Associates Admin</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Marcellus&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+    <link rel="stylesheet" href="/admin/css/admin.css" />
+</head>
+<body>
+
+<div class="adm-layout">
+
+    <!-- ── Sidebar ─────────────────────────────────────────── -->
+    <aside class="adm-sidebar">
+        <a href="/" class="adm-sidebar__logo">
+            <img src="/assets/images/mds/logo-transparent.png" alt="MDS">
+            <span>Monique D. Scott<br>&amp; Associates</span>
+        </a>
+
+        <ul class="adm-nav">
+            <li>
+                <a href="#" class="active" data-panel="publications">
+                    <i class="fa fa-newspaper"></i> Publications
+                </a>
+            </li>
+            <li>
+                <a href="#" data-panel="listings">
+                    <i class="fa fa-home"></i> Listings
+                </a>
+            </li>
+            <li>
+                <a href="#" data-panel="uploads">
+                    <i class="fa fa-upload"></i> Uploads
+                </a>
+            </li>
+        </ul>
+
+        <div class="adm-sidebar__footer">
+            <p class="adm-sidebar__user" id="sidebar-user-email"></p>
+            <button class="adm-btn adm-btn--ghost adm-btn--sm" id="logout-btn" style="width:100%;">
+                <i class="fa fa-sign-out-alt"></i> Sign Out
+            </button>
+        </div>
+    </aside>
+
+    <!-- ── Main ────────────────────────────────────────────── -->
+    <div class="adm-main">
+
+        <div class="adm-topbar">
+            <h2 id="adm-page-title">Publications</h2>
+            <a href="/" target="_blank" style="color:var(--muted);font-size:13px;"><i class="fa fa-external-link-alt"></i> View Site</a>
+        </div>
+
+        <div class="adm-content">
+
+            <!-- ══════ PUBLICATIONS PANEL ══════ -->
+            <div class="adm-panel active" id="panel-publications">
+                <div class="adm-card">
+                    <div class="adm-card__head">
+                        <h3>Publications</h3>
+                        <button class="adm-btn adm-btn--sm" onclick="openPubModal()"><i class="fa fa-plus"></i> New Publication</button>
+                    </div>
+                    <div class="adm-table-wrap">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Date</th>
+                                    <th>Status</th>
+                                    <th>Featured</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pub-tbody">
+                                <tr><td colspan="6" class="adm-loading"><i class="fa fa-spinner fa-spin"></i></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══════ LISTINGS PANEL ══════ -->
+            <div class="adm-panel" id="panel-listings">
+                <div class="adm-card">
+                    <div class="adm-card__head">
+                        <h3>Property Listings</h3>
+                        <button class="adm-btn adm-btn--sm" onclick="openListingModal()"><i class="fa fa-plus"></i> New Listing</button>
+                    </div>
+                    <div class="adm-table-wrap">
+                        <table class="adm-table">
+                            <thead>
+                                <tr>
+                                    <th>Title</th>
+                                    <th>Type</th>
+                                    <th>Price</th>
+                                    <th>Status</th>
+                                    <th>Featured</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="listing-tbody">
+                                <tr><td colspan="6" class="adm-loading"><i class="fa fa-spinner fa-spin"></i></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══════ UPLOADS PANEL ══════ -->
+            <div class="adm-panel" id="panel-uploads">
+                <div class="adm-card">
+                    <div class="adm-card__head">
+                        <h3>File Uploads</h3>
+                    </div>
+
+                    <div style="display:flex;gap:16px;align-items:flex-end;flex-wrap:wrap;margin-bottom:24px;">
+                        <div style="flex:1;min-width:200px;">
+                            <label class="adm-form-group" style="display:block;">
+                                <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:block;margin-bottom:6px;">Bucket</span>
+                                <select id="upload-bucket" style="width:100%;padding:10px 12px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:13px;outline:none;">
+                                    <option value="images">images — photos, graphics</option>
+                                    <option value="documents">documents — PDF, DOCX</option>
+                                    <option value="audio">audio — MP3</option>
+                                </select>
+                            </label>
+                        </div>
+                        <div style="flex:2;min-width:260px;">
+                            <label class="adm-form-group" style="display:block;">
+                                <span style="font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.06em;color:var(--muted);display:block;margin-bottom:6px;">File</span>
+                                <input type="file" id="upload-file-input" style="width:100%;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-size:13px;outline:none;">
+                            </label>
+                        </div>
+                        <button class="adm-btn adm-btn--sm" id="upload-btn" onclick="uploadFile()" style="width:auto;margin-bottom:2px;">
+                            <i class="fa fa-upload"></i> Upload
+                        </button>
+                    </div>
+
+                    <p style="font-size:12px;color:var(--muted);margin-bottom:16px;">Uploaded files are stored in Supabase Storage. Copy the URL to use it in a publication or listing.</p>
+
+                    <ul class="adm-upload-list" id="upload-results"></ul>
+                </div>
+            </div>
+
+        </div><!-- /.adm-content -->
+    </div><!-- /.adm-main -->
+</div><!-- /.adm-layout -->
+
+<!-- ══════ PUBLICATION MODAL ══════ -->
+<div class="adm-modal-overlay" id="pub-modal">
+    <div class="adm-modal">
+        <div class="adm-modal__head">
+            <h3 id="pub-modal-title">New Publication</h3>
+            <button class="adm-modal__close" onclick="closePubModal()">&times;</button>
+        </div>
+
+        <div class="adm-form-section">Basic Details</div>
+        <div class="adm-form-row">
+            <div class="adm-form-group">
+                <label for="pub-title">Title *</label>
+                <input type="text" id="pub-title" placeholder="Article title">
+            </div>
+            <div class="adm-form-group">
+                <label for="pub-slug">URL Slug</label>
+                <input type="text" id="pub-slug" placeholder="auto-generated-from-title">
+            </div>
+        </div>
+        <div class="adm-form-row">
+            <div class="adm-form-group">
+                <label for="pub-date">Publish Date</label>
+                <input type="date" id="pub-date">
+            </div>
+            <div class="adm-form-group">
+                <label for="pub-category">Category</label>
+                <select id="pub-category">
+                    <option>Legal Update</option>
+                    <option>Newsletter</option>
+                    <option>Firm News</option>
+                    <option>Case Study</option>
+                    <option>Press Release</option>
+                    <option>Client Advisory</option>
+                </select>
+            </div>
+        </div>
+        <div class="adm-form-row">
+            <div class="adm-form-group">
+                <label for="pub-status">Status</label>
+                <select id="pub-status">
+                    <option value="published">Published</option>
+                    <option value="draft">Draft</option>
+                </select>
+            </div>
+            <div class="adm-form-group" style="display:flex;align-items:center;gap:8px;padding-top:22px;">
+                <input type="checkbox" id="pub-featured">
+                <label for="pub-featured" style="text-transform:none;letter-spacing:0;font-size:13px;">Featured on homepage</label>
+            </div>
+        </div>
+
+        <div class="adm-form-section">Content</div>
+        <div class="adm-form-row full">
+            <div class="adm-form-group">
+                <label for="pub-summary">Summary (shown on cards)</label>
+                <textarea id="pub-summary" rows="3" placeholder="1–2 sentence description shown on listing cards…"></textarea>
+            </div>
+        </div>
+        <div class="adm-form-row full">
+            <div class="adm-form-group">
+                <label for="pub-body">Article Body (Markdown)</label>
+                <textarea id="pub-body" rows="10" placeholder="Write the full article in Markdown…" style="font-family:monospace;font-size:13px;"></textarea>
+            </div>
+        </div>
+
+        <div class="adm-form-section">Media</div>
+        <div class="adm-form-row">
+            <div class="adm-form-group">
+                <label for="pub-image-file">Featured Image</label>
+                <input type="file" id="pub-image-file" accept="image/*">
+                <p class="adm-form-hint" id="pub-image-current"></p>
+            </div>
+            <div class="adm-form-group">
+                <label for="pub-doc-file">Document / PDF</label>
+                <input type="file" id="pub-doc-file" accept=".pdf,.doc,.docx">
+                <p class="adm-form-hint" id="pub-doc-current"></p>
+            </div>
+        </div>
+
+        <div class="adm-modal__foot">
+            <button class="adm-btn adm-btn--ghost adm-btn--sm" onclick="closePubModal()">Cancel</button>
+            <button class="adm-btn adm-btn--sm" id="pub-save-btn" onclick="savePub()">Save</button>
+        </div>
+    </div>
+</div>
+
+<!-- ══════ LISTING MODAL ══════ -->
+<div class="adm-modal-overlay" id="listing-modal">
+    <div class="adm-modal">
+        <div class="adm-modal__head">
+            <h3 id="listing-modal-title">New Listing</h3>
+            <button class="adm-modal__close" onclick="closeListingModal()">&times;</button>
+        </div>
+
+        <div class="adm-form-section">Basic Details</div>
+        <div class="adm-form-row">
+            <div class="adm-form-group">
+                <label for="lst-title">Property Title *</label>
+                <input type="text" id="lst-title" placeholder="e.g. Commercial Office Space — Port Antonio">
+            </div>
+            <div class="adm-form-group">
+                <label for="lst-slug">URL Slug</label>
+                <input type="text" id="lst-slug" placeholder="auto-generated-from-title">
+            </div>
+        </div>
+        <div class="adm-form-row">
+            <div class="adm-form-group">
+                <label for="lst-type">Listing Type</label>
+                <select id="lst-type">
+                    <option>For Sale</option>
+                    <option>For Rent</option>
+                    <option>Commercial</option>
+                    <option>Land</option>
+                </select>
+            </div>
+            <div class="adm-form-group">
+                <label for="lst-price">Price / Rate</label>
+                <input type="text" id="lst-price" placeholder='e.g. "$45,000 JMD/month" or "Price on Request"'>
+            </div>
+        </div>
+        <div class="adm-form-row">
+            <div class="adm-form-group">
+                <label for="lst-location">Location</label>
+                <input type="text" id="lst-location" placeholder="e.g. 21 West Palm Ave, Port Antonio">
+            </div>
+            <div class="adm-form-group">
+                <label for="lst-parish">Parish</label>
+                <select id="lst-parish">
+                    <option>Kingston</option>
+                    <option>St. Andrew</option>
+                    <option>St. Thomas</option>
+                    <option>Portland</option>
+                    <option>St. Mary</option>
+                    <option>St. Ann</option>
+                    <option>Trelawny</option>
+                    <option>St. James</option>
+                    <option>Hanover</option>
+                    <option>Westmoreland</option>
+                    <option>St. Elizabeth</option>
+                    <option>Manchester</option>
+                    <option>Clarendon</option>
+                    <option>St. Catherine</option>
+                </select>
+            </div>
+        </div>
+        <div class="adm-form-row">
+            <div class="adm-form-group">
+                <label for="lst-status">Status</label>
+                <select id="lst-status">
+                    <option value="available">Available</option>
+                    <option value="pending">Pending</option>
+                    <option value="sold">Sold / Let</option>
+                    <option value="draft">Draft</option>
+                </select>
+            </div>
+            <div class="adm-form-group" style="display:flex;align-items:center;gap:8px;padding-top:22px;">
+                <input type="checkbox" id="lst-featured">
+                <label for="lst-featured" style="text-transform:none;letter-spacing:0;font-size:13px;">Featured on homepage</label>
+            </div>
+        </div>
+
+        <div class="adm-form-section">Content</div>
+        <div class="adm-form-row full">
+            <div class="adm-form-group">
+                <label for="lst-summary">Summary (shown on cards)</label>
+                <textarea id="lst-summary" rows="3" placeholder="Short property description for listing cards…"></textarea>
+            </div>
+        </div>
+        <div class="adm-form-row full">
+            <div class="adm-form-group">
+                <label for="lst-body">Full Description (Markdown)</label>
+                <textarea id="lst-body" rows="8" placeholder="Full property description in Markdown…" style="font-family:monospace;font-size:13px;"></textarea>
+            </div>
+        </div>
+
+        <div class="adm-form-section">Media</div>
+        <div class="adm-form-row">
+            <div class="adm-form-group">
+                <label for="lst-image-file">Featured Image</label>
+                <input type="file" id="lst-image-file" accept="image/*">
+                <p class="adm-form-hint" id="lst-image-current"></p>
+            </div>
+            <div class="adm-form-group">
+                <label for="lst-gallery-files">Gallery Images (multiple)</label>
+                <input type="file" id="lst-gallery-files" accept="image/*" multiple>
+                <p class="adm-form-hint">Hold Ctrl / Cmd to select multiple images. Uploading new files replaces the existing gallery.</p>
+            </div>
+        </div>
+        <div class="adm-gallery-preview" id="lst-gallery-preview"></div>
+
+        <div class="adm-modal__foot">
+            <button class="adm-btn adm-btn--ghost adm-btn--sm" onclick="closeListingModal()">Cancel</button>
+            <button class="adm-btn adm-btn--sm" id="listing-save-btn" onclick="saveListing()">Save</button>
+        </div>
+    </div>
+</div>
+
+<!-- Toast -->
+<div id="adm-toast" class="adm-toast"></div>
+
+<!-- Scripts -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script>
+(function () {
+    var SUPABASE_URL      = 'https://efvnklokllobqsoripxy.supabase.co';
+    var SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImVmdm5rbG9rbGxvYnFzb3JpcHh5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM4ODk2MTUsImV4cCI6MjA4OTQ2NTYxNX0.ALq-QLhQqCb2FXciB46FY1wxLc_F5DvL8U5EpW_XOn8';
+    var db = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    window.adminDb = db;
+
+    // Auth guard — redirect to login if not authenticated
+    db.auth.getSession().then(function (result) {
+        if (!result.data || !result.data.session) {
+            window.location.replace('/admin/');
+            return;
+        }
+        var email = result.data.session.user.email;
+        var el = document.getElementById('sidebar-user-email');
+        if (el) el.textContent = email;
+    });
+
+    // Logout
+    document.getElementById('logout-btn').addEventListener('click', function () {
+        db.auth.signOut().then(function () {
+            window.location.replace('/admin/');
+        });
+    });
+})();
+</script>
+<script src="/admin/js/admin-dashboard.js"></script>
+</body>
+</html>
