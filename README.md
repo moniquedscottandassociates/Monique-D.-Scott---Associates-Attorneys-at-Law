@@ -177,58 +177,151 @@ After deploying on Netlify:
 
 ---
 
-## Decap CMS Setup
+## Admin System (Supabase)
 
-### Step 1 — Update admin/config.yml
+The site uses a custom admin panel at `/admin/` backed by **Supabase** (Auth + Database + Storage).
+No GitHub OAuth or Decap CMS is required.
 
-The repo is already set in `admin/config.yml`:
-```yaml
-repo: bestjamaicanexperience/Monique-D.-Scott---Associates-Attorneys-at-Law
+---
+
+### Step 1 — Create Supabase Tables
+
+Log in to [app.supabase.com](https://app.supabase.com), open the project **efvnklokllobqsoripxy**, go to **SQL Editor**, and run:
+
+```sql
+-- Publications
+CREATE TABLE publications (
+  id            uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  slug          text UNIQUE NOT NULL,
+  title         text NOT NULL,
+  date          date,
+  category      text DEFAULT 'Legal Update',
+  summary       text,
+  featured_image text,
+  document_file  text,
+  body          text,
+  featured      boolean DEFAULT false,
+  status        text DEFAULT 'published',
+  created_at    timestamptz DEFAULT now(),
+  updated_at    timestamptz DEFAULT now()
+);
+
+-- Listings
+CREATE TABLE listings (
+  id            uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  slug          text UNIQUE NOT NULL,
+  title         text NOT NULL,
+  listing_type  text DEFAULT 'For Sale',
+  price         text,
+  location      text,
+  parish        text DEFAULT 'Portland',
+  summary       text,
+  featured_image text,
+  gallery       text[],
+  body          text,
+  status        text DEFAULT 'available',
+  featured      boolean DEFAULT false,
+  created_at    timestamptz DEFAULT now(),
+  updated_at    timestamptz DEFAULT now()
+);
+
+-- Row Level Security
+ALTER TABLE publications ENABLE ROW LEVEL SECURITY;
+ALTER TABLE listings     ENABLE ROW LEVEL SECURITY;
+
+-- Public (anon) can read published content
+CREATE POLICY "anon_read_publications" ON publications
+  FOR SELECT TO anon USING (status = 'published');
+
+CREATE POLICY "anon_read_listings" ON listings
+  FOR SELECT TO anon USING (status <> 'draft');
+
+-- Authenticated users (admin) can do everything
+CREATE POLICY "auth_all_publications" ON publications
+  FOR ALL TO authenticated USING (true) WITH CHECK (true);
+
+CREATE POLICY "auth_all_listings" ON listings
+  FOR ALL TO authenticated USING (true) WITH CHECK (true);
 ```
-No changes needed here unless the repo is renamed or transferred.
 
-### Step 2 — Enable GitHub OAuth on Netlify
+---
 
-1. Go to **Netlify → Site Settings → Access control → OAuth**
-2. Click **Install provider → GitHub**
-3. Follow the instructions (requires a GitHub OAuth App)
-   - Authorization callback URL: `https://api.netlify.com/auth/done`
-4. Enter the Client ID and Client Secret from GitHub
-5. Click **Save**
+### Step 2 — Create Storage Buckets
 
-This is required for the `/admin` login to work.
+In Supabase → **Storage**, create three **public** buckets:
 
-### Step 3 — Access the CMS
+| Bucket name | Purpose |
+|-------------|---------|
+| `images`    | Featured images, gallery photos |
+| `documents` | PDF and DOCX downloads |
+| `audio`     | MP3 audio files |
 
-After deploy, visit:
-`https://moniquedscottandassociates.com/admin/`
+For each bucket, go to **Policies** and add:
 
-Log in with your GitHub account. You will see:
-- **Publications** — create/edit/delete articles
-- **Property Listings** — manage property listings
+```sql
+-- Allow public read
+CREATE POLICY "public_read" ON storage.objects
+  FOR SELECT USING (bucket_id IN ('images','documents','audio'));
 
-### How Content Publishing Works
+-- Allow authenticated upload
+CREATE POLICY "auth_upload" ON storage.objects
+  FOR INSERT TO authenticated WITH CHECK (bucket_id IN ('images','documents','audio'));
 
-1. You create or edit content in `/admin`
-2. Decap CMS commits the markdown file to GitHub
-3. Netlify detects the commit and triggers a build
-4. The build script (`node scripts/build-indexes.js`) reads all `.md` files and regenerates the JSON indexes
-5. The site deploys with the updated content (usually within 60 seconds)
+-- Allow authenticated delete
+CREATE POLICY "auth_delete" ON storage.objects
+  FOR DELETE TO authenticated USING (bucket_id IN ('images','documents','audio'));
+```
 
-### Adding Publications
+---
 
-- Go to `/admin/` → Publications → New Publication
-- Fill in: Title, Date, Category, Summary, Body (markdown editor)
-- Optionally upload a featured image or PDF document
-- Set Status to "Published" and click Save
-- The article will appear on `/publications.html` after the next build
+### Step 3 — Create an Admin User
 
-### Adding Listings
+Admin accounts use **Supabase Auth** (email + password). To create a user:
 
-- Go to `/admin/` → Property Listings → New Listing
-- Fill in: Title, Type, Price, Location, Parish, Summary, Description
-- Upload a featured image and/or gallery images
-- Set Status to "Available" and click Save
+1. Go to **Supabase → Authentication → Users**
+2. Click **Invite user** (or **Add user**)
+3. Enter the email and a strong password
+4. The user can now log in at `/admin/`
+
+> To create additional admin users repeat step 3. There is no self-registration — accounts are created manually.
+
+---
+
+### Step 4 — Log In
+
+Visit: `https://moniquedscottandassociates.com/admin/`
+
+- Enter the email and password created in Step 3
+- On success you are redirected to `/admin/dashboard.html`
+- The dashboard has three sections: **Publications**, **Listings**, **Uploads**
+
+---
+
+### Step 5 — Deploy to Netlify
+
+```bash
+git add .
+git commit -m "Add Supabase admin system"
+git push origin main
+```
+
+Netlify picks up the push automatically. No build command is required — the site is plain static HTML.
+
+**Netlify settings:**
+- Build command: _(leave blank)_
+- Publish directory: `.`
+
+---
+
+### How the Admin Works
+
+| Feature | Detail |
+|---------|--------|
+| Login | Supabase email/password auth |
+| Publications | Create / edit / delete with Markdown body and image/PDF upload |
+| Listings | Create / edit / delete with gallery image upload |
+| Uploads | Upload any file to `images`, `documents`, or `audio` bucket; copy public URL |
+| Frontend | Pages fetch live from Supabase — no rebuild needed after saving content |
 
 ---
 
@@ -249,19 +342,15 @@ After first deploy, configure email notifications for **both forms**:
 
 ## Ownership Transfer
 
-When handing over the project to the client:
+When handing over the project:
 
 1. **Transfer GitHub repo** to client's GitHub account:
    - GitHub → Repo → Settings → Danger Zone → Transfer ownership
-2. **Update `admin/config.yml`** to reflect the new GitHub username/repo after transfer:
-   ```yaml
-   repo: NEW-OWNER-USERNAME/Monique-D.-Scott---Associates-Attorneys-at-Law
-   ```
-3. **Reconnect Netlify** to the new repo:
+2. **Reconnect Netlify** to the new repo:
    - Netlify → Site Settings → Build & Deploy → Link to a different repository
-4. **Transfer Netlify site** if needed:
-   - Netlify → Team Settings → Sites → Transfer site to another team
-5. Set up new GitHub OAuth app under client's GitHub account for CMS login
+3. **Transfer Supabase project** to client's Supabase organisation:
+   - Supabase → Project Settings → General → Transfer project
+4. Create a new admin user under the client's email in Supabase Auth (see Step 3 above)
 
 ---
 
@@ -270,6 +359,6 @@ When handing over the project to the client:
 - `server.js` is for **local preview only** — excluded from git, not deployed
 - Contact form submissions are handled by **Netlify Forms** — no PHP, no backend required
 - All asset paths on inner pages use `/assets/...` (root-relative) for reliability
-- `content/*.json` files must be committed to git — they are also regenerated on every Netlify build
-- `assets/uploads/` — media uploaded via Decap CMS is stored here and committed to git automatically
+- Content is stored in Supabase — no JSON index files or rebuild needed after admin saves
 - The `assets/inc/sendemail.php` file is legacy/unused — the site runs on Netlify Forms only
+- The old `admin/config.yml` (Decap CMS) is superseded and can be deleted after testing

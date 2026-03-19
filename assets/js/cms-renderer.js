@@ -2,7 +2,8 @@
  * cms-renderer.js
  * Monique D. Scott & Associates — Client-Side CMS Content Renderer
  *
- * Reads JSON index files and individual markdown files, then builds UI.
+ * Reads from Supabase (publications + listings tables).
+ * Requires supabase-public.js to be loaded first (exposes window.mdsDb).
  * Used by: publications.html, publication-single.html,
  *           listings.html, listing-single.html, and homepage preview sections.
  */
@@ -11,31 +12,6 @@
 
 /* ── Utilities ───────────────────────────────────────────────── */
 
-/**
- * Parse YAML front matter from a raw markdown string.
- * Returns { data: {}, body: '' }
- */
-function mdsParseMarkdown(raw) {
-    var fmMatch = raw.match(/^---\r?\n([\s\S]*?)\r?\n---(?:\r?\n|$)([\s\S]*)$/);
-    if (!fmMatch) return { data: {}, body: raw };
-
-    var data = {};
-    fmMatch[1].split(/\r?\n/).forEach(function (line) {
-        var ci = line.indexOf(': ');
-        if (ci === -1) return;
-        var key = line.slice(0, ci).trim();
-        var val = line.slice(ci + 2).trim().replace(/^["']|["']$/g, '');
-        if (val === 'true') val = true;
-        else if (val === 'false') val = false;
-        data[key] = val;
-    });
-
-    return { data: data, body: fmMatch[2] };
-}
-
-/**
- * Format an ISO date string to "January 20, 2025" style.
- */
 function mdsFormatDate(dateStr) {
     if (!dateStr) return '';
     try {
@@ -44,19 +20,22 @@ function mdsFormatDate(dateStr) {
     } catch (e) { return dateStr; }
 }
 
-/**
- * Get a URL query parameter value.
- */
 function mdsParam(name) {
     return new URLSearchParams(window.location.search).get(name);
 }
 
-/**
- * Truncate a string to maxLen characters, adding ellipsis if needed.
- */
 function mdsTruncate(str, maxLen) {
     if (!str) return '';
     return str.length > maxLen ? str.slice(0, maxLen).trimEnd() + '…' : str;
+}
+
+function mdsSafe(str) {
+    if (str === undefined || str === null) return '';
+    return String(str)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;');
 }
 
 /* ── Publication Card Builder ────────────────────────────────── */
@@ -64,7 +43,7 @@ function mdsTruncate(str, maxLen) {
 function mdsBuildPubCard(item, delay) {
     delay = delay || 0;
     var imgHtml = item.featured_image
-        ? '<img src="' + item.featured_image + '" alt="' + mdsSafe(item.title) + '" loading="lazy">'
+        ? '<img src="' + mdsSafe(item.featured_image) + '" alt="' + mdsSafe(item.title) + '" loading="lazy">'
         : '<div class="mds-pub-card__image-placeholder"><i class="fa fa-file-alt"></i></div>';
 
     return (
@@ -91,7 +70,7 @@ function mdsBuildPubCard(item, delay) {
 function mdsBuildListingCard(item, delay) {
     delay = delay || 0;
     var imgHtml = item.featured_image
-        ? '<img src="' + item.featured_image + '" alt="' + mdsSafe(item.title) + '" loading="lazy">'
+        ? '<img src="' + mdsSafe(item.featured_image) + '" alt="' + mdsSafe(item.title) + '" loading="lazy">'
         : '<div class="mds-listing-card__image-placeholder"><i class="fa fa-home"></i></div>';
 
     return (
@@ -114,17 +93,8 @@ function mdsBuildListingCard(item, delay) {
     );
 }
 
-/* ── Safe HTML escape ────────────────────────────────────────── */
-function mdsSafe(str) {
-    if (str === undefined || str === null) return '';
-    return String(str)
-        .replace(/&/g, '&amp;')
-        .replace(/</g, '&lt;')
-        .replace(/>/g, '&gt;')
-        .replace(/"/g, '&quot;');
-}
-
 /* ── Render Publications Grid ────────────────────────────────── */
+
 function mdsRenderPublications(containerId, opts) {
     opts = opts || {};
     var el = document.getElementById(containerId);
@@ -132,31 +102,45 @@ function mdsRenderPublications(containerId, opts) {
 
     el.innerHTML = '<div class="mds-state"><i class="fa fa-spinner fa-spin"></i><p>Loading publications&hellip;</p></div>';
 
-    fetch('/content/publications-index.json?v=' + Date.now())
-        .then(function (r) { return r.json(); })
-        .then(function (items) {
-            if (opts.featuredOnly) items = items.filter(function (i) { return i.featured; });
-            if (opts.limit) items = items.slice(0, opts.limit);
-            if (opts.category) items = items.filter(function (i) { return i.category === opts.category; });
+    if (!window.mdsDb) {
+        el.innerHTML = '<div class="col-12"><div class="mds-state"><i class="fa fa-exclamation-circle"></i><p>Unable to load publications.</p></div></div>';
+        return;
+    }
 
-            if (!items.length) {
-                el.innerHTML = '<div class="col-12"><div class="mds-state"><i class="fa fa-newspaper"></i><p>No publications found.</p></div></div>';
-                return;
-            }
+    var query = window.mdsDb
+        .from('publications')
+        .select('id,slug,title,date,category,summary,featured_image,featured,status')
+        .eq('status', 'published')
+        .order('date', { ascending: false });
 
-            el.innerHTML = items.map(function (item, idx) {
-                return mdsBuildPubCard(item, idx * 100);
-            }).join('');
+    if (opts.featuredOnly) query = query.eq('featured', true);
+    if (opts.limit)        query = query.limit(opts.limit);
+    if (opts.category)     query = query.eq('category', opts.category);
 
-            // Re-init WOW animations if available
-            if (typeof WOW !== 'undefined') { new WOW({ live: false }).init(); }
-        })
-        .catch(function () {
+    query.then(function (result) {
+        var items = result.data || [];
+        var error = result.error;
+
+        if (error) {
             el.innerHTML = '<div class="col-12"><div class="mds-state"><i class="fa fa-exclamation-circle"></i><p>Unable to load publications.</p></div></div>';
-        });
+            return;
+        }
+
+        if (!items.length) {
+            el.innerHTML = '<div class="col-12"><div class="mds-state"><i class="fa fa-newspaper"></i><p>No publications found.</p></div></div>';
+            return;
+        }
+
+        el.innerHTML = items.map(function (item, idx) {
+            return mdsBuildPubCard(item, idx * 100);
+        }).join('');
+
+        if (typeof WOW !== 'undefined') { new WOW({ live: false }).init(); }
+    });
 }
 
 /* ── Render Listings Grid ────────────────────────────────────── */
+
 function mdsRenderListings(containerId, opts) {
     opts = opts || {};
     var el = document.getElementById(containerId);
@@ -164,29 +148,44 @@ function mdsRenderListings(containerId, opts) {
 
     el.innerHTML = '<div class="mds-state"><i class="fa fa-spinner fa-spin"></i><p>Loading listings&hellip;</p></div>';
 
-    fetch('/content/listings-index.json?v=' + Date.now())
-        .then(function (r) { return r.json(); })
-        .then(function (items) {
-            if (opts.type) items = items.filter(function (i) { return i.listing_type === opts.type; });
-            if (opts.limit) items = items.slice(0, opts.limit);
+    if (!window.mdsDb) {
+        el.innerHTML = '<div class="col-12"><div class="mds-state"><i class="fa fa-exclamation-circle"></i><p>Unable to load listings.</p></div></div>';
+        return;
+    }
 
-            if (!items.length) {
-                el.innerHTML = '<div class="col-12"><div class="mds-state"><i class="fa fa-home"></i><p>No listings found.</p></div></div>';
-                return;
-            }
+    var query = window.mdsDb
+        .from('listings')
+        .select('id,slug,title,listing_type,price,location,parish,summary,featured_image,featured,status')
+        .neq('status', 'draft')
+        .order('created_at', { ascending: false });
 
-            el.innerHTML = items.map(function (item, idx) {
-                return mdsBuildListingCard(item, idx * 100);
-            }).join('');
+    if (opts.type)  query = query.eq('listing_type', opts.type);
+    if (opts.limit) query = query.limit(opts.limit);
 
-            if (typeof WOW !== 'undefined') { new WOW({ live: false }).init(); }
-        })
-        .catch(function () {
+    query.then(function (result) {
+        var items = result.data || [];
+        var error = result.error;
+
+        if (error) {
             el.innerHTML = '<div class="col-12"><div class="mds-state"><i class="fa fa-exclamation-circle"></i><p>Unable to load listings.</p></div></div>';
-        });
+            return;
+        }
+
+        if (!items.length) {
+            el.innerHTML = '<div class="col-12"><div class="mds-state"><i class="fa fa-home"></i><p>No listings found.</p></div></div>';
+            return;
+        }
+
+        el.innerHTML = items.map(function (item, idx) {
+            return mdsBuildListingCard(item, idx * 100);
+        }).join('');
+
+        if (typeof WOW !== 'undefined') { new WOW({ live: false }).init(); }
+    });
 }
 
 /* ── Render Single Publication ───────────────────────────────── */
+
 function mdsRenderSinglePublication(containerId) {
     var el = document.getElementById(containerId);
     if (!el) return;
@@ -199,22 +198,35 @@ function mdsRenderSinglePublication(containerId) {
 
     el.innerHTML = '<div class="mds-state"><i class="fa fa-spinner fa-spin"></i><p>Loading&hellip;</p></div>';
 
-    fetch('/content/publications/' + encodeURIComponent(slug) + '.md?v=' + Date.now())
-        .then(function (r) {
-            if (!r.ok) throw new Error('Not found');
-            return r.text();
-        })
-        .then(function (raw) {
-            var parsed = mdsParseMarkdown(raw);
-            var d = parsed.data;
+    if (!window.mdsDb) {
+        el.innerHTML = '<div class="mds-state"><i class="fa fa-exclamation-circle"></i><p>Unable to load publication.</p></div>';
+        return;
+    }
 
-            // Update page title
+    window.mdsDb
+        .from('publications')
+        .select('*')
+        .eq('slug', slug)
+        .eq('status', 'published')
+        .single()
+        .then(function (result) {
+            if (result.error || !result.data) {
+                el.innerHTML =
+                    '<div class="mds-state"><i class="fa fa-exclamation-circle"></i>' +
+                    '<p>Publication not found. <a href="/publications.html" style="color:#c7954a">View all publications</a></p></div>';
+                return;
+            }
+
+            var d = result.data;
+
             document.title = (d.title || 'Publication') + ' | Monique D. Scott & Associates';
 
-            // Render markdown body (requires marked.js on page)
+            var titleEl = document.getElementById('article-hero-title');
+            if (titleEl) titleEl.textContent = d.title || 'Publication';
+
             var bodyHtml = (typeof marked !== 'undefined')
-                ? marked.parse(parsed.body)
-                : '<pre>' + mdsSafe(parsed.body) + '</pre>';
+                ? marked.parse(d.body || '')
+                : '<pre>' + mdsSafe(d.body || '') + '</pre>';
 
             var featImg = d.featured_image
                 ? '<img src="' + mdsSafe(d.featured_image) + '" alt="' + mdsSafe(d.title) + '" class="mds-article__feat-img">'
@@ -234,15 +246,11 @@ function mdsRenderSinglePublication(containerId) {
                 '<div class="mds-article__body">' + bodyHtml + '</div>' +
                 dlBtn +
                 '</div>';
-        })
-        .catch(function () {
-            el.innerHTML =
-                '<div class="mds-state"><i class="fa fa-exclamation-circle"></i>' +
-                '<p>Publication not found. <a href="/publications.html" style="color:#c7954a">View all publications</a></p></div>';
         });
 }
 
 /* ── Render Single Listing ───────────────────────────────────── */
+
 function mdsRenderSingleListing(containerId) {
     var el = document.getElementById(containerId);
     if (!el) return;
@@ -255,20 +263,32 @@ function mdsRenderSingleListing(containerId) {
 
     el.innerHTML = '<div class="mds-state"><i class="fa fa-spinner fa-spin"></i><p>Loading&hellip;</p></div>';
 
-    fetch('/content/listings/' + encodeURIComponent(slug) + '.md?v=' + Date.now())
-        .then(function (r) {
-            if (!r.ok) throw new Error('Not found');
-            return r.text();
-        })
-        .then(function (raw) {
-            var parsed = mdsParseMarkdown(raw);
-            var d = parsed.data;
+    if (!window.mdsDb) {
+        el.innerHTML = '<div class="mds-state"><i class="fa fa-exclamation-circle"></i><p>Unable to load listing.</p></div>';
+        return;
+    }
+
+    window.mdsDb
+        .from('listings')
+        .select('*')
+        .eq('slug', slug)
+        .neq('status', 'draft')
+        .single()
+        .then(function (result) {
+            if (result.error || !result.data) {
+                el.innerHTML =
+                    '<div class="mds-state"><i class="fa fa-exclamation-circle"></i>' +
+                    '<p>Listing not found. <a href="/listings.html" style="color:#c7954a">View all listings</a></p></div>';
+                return;
+            }
+
+            var d = result.data;
 
             document.title = (d.title || 'Listing') + ' | Monique D. Scott & Associates';
 
             var bodyHtml = (typeof marked !== 'undefined')
-                ? marked.parse(parsed.body)
-                : '<pre>' + mdsSafe(parsed.body) + '</pre>';
+                ? marked.parse(d.body || '')
+                : '<pre>' + mdsSafe(d.body || '') + '</pre>';
 
             var featImg = d.featured_image
                 ? '<img src="' + mdsSafe(d.featured_image) + '" alt="' + mdsSafe(d.title) + '" style="width:100%;max-height:420px;object-fit:cover;border-radius:6px;display:block;margin-bottom:32px;">'
@@ -276,10 +296,13 @@ function mdsRenderSingleListing(containerId) {
 
             var gallery = '';
             if (d.gallery && d.gallery.length) {
-                var imgs = (Array.isArray(d.gallery) ? d.gallery : [d.gallery]).map(function (src) {
-                    return '<img src="' + mdsSafe(src) + '" alt="Property image" loading="lazy">';
-                }).join('');
-                gallery = '<h3 style="font-family:\'Marcellus\',serif;color:#fff;margin-top:36px;margin-bottom:16px;">Gallery</h3><div class="mds-gallery">' + imgs + '</div>';
+                var galleryItems = Array.isArray(d.gallery) ? d.gallery : JSON.parse(d.gallery || '[]');
+                if (galleryItems.length) {
+                    var imgs = galleryItems.map(function (src) {
+                        return '<img src="' + mdsSafe(src) + '" alt="Property image" loading="lazy">';
+                    }).join('');
+                    gallery = '<h3 style="font-family:\'Marcellus\',serif;color:#fff;margin-top:36px;margin-bottom:16px;">Gallery</h3><div class="mds-gallery">' + imgs + '</div>';
+                }
             }
 
             el.innerHTML =
@@ -308,11 +331,6 @@ function mdsRenderSingleListing(containerId) {
                 '</div>' +
                 '</div>' +
                 '</div>';
-        })
-        .catch(function () {
-            el.innerHTML =
-                '<div class="mds-state"><i class="fa fa-exclamation-circle"></i>' +
-                '<p>Listing not found. <a href="/listings.html" style="color:#c7954a">View all listings</a></p></div>';
         });
 }
 
@@ -321,6 +339,7 @@ function mdsMetaRow(label, val) {
 }
 
 /* ── Publications Filter ─────────────────────────────────────── */
+
 function mdsInitFilter(filterId, gridId, renderFn) {
     var filterEl = document.getElementById(filterId);
     if (!filterEl) return;
@@ -338,6 +357,7 @@ function mdsInitFilter(filterId, gridId, renderFn) {
 }
 
 /* ── Registration: pre-select service from URL param ─────────── */
+
 function mdsPreSelectService() {
     var type = mdsParam('type');
     if (!type) return;
@@ -345,15 +365,14 @@ function mdsPreSelectService() {
     var select = document.getElementById('intake-service-type');
     if (!select) return;
 
-    // Map URL param values to option values
     var map = {
-        'conveyancing'  : 'Conveyancing & Property Transfer',
-        'probate'        : 'Probate & Estate Administration',
-        'family'         : 'Family Law Matter',
-        'injury'         : 'Personal Injury Claim',
-        'criminal'       : 'Criminal Defence',
-        'property'       : 'Property Listing Submission',
-        'consultation'   : 'General Consultation'
+        'conveyancing' : 'Conveyancing & Property Transfer',
+        'probate'       : 'Probate & Estate Administration',
+        'family'        : 'Family Law Matter',
+        'injury'        : 'Personal Injury Claim',
+        'criminal'      : 'Criminal Defence',
+        'property'      : 'Property Listing Submission',
+        'consultation'  : 'General Consultation'
     };
 
     var target = map[type] || null;
