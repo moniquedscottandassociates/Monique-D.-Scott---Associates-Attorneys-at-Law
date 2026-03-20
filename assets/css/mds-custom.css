@@ -1146,3 +1146,164 @@ address {
   }
 
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   MDS Intake / Registration Form — consistency & layout fixes
+   NOTE: selectors target .mds-registration-section directly so
+   they work regardless of inner class names.
+   ═══════════════════════════════════════════════════════════════ */
+
+/* Form card container */
+.mds-registration-section {
+  background-color: rgba(0, 0, 0, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 4px;
+  padding: 40px 40px 48px;
+}
+
+/* Section heading */
+.mds-form-section-title {
+  font-size: 1.35rem;
+  color: #ffffff;
+  margin-bottom: 28px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  letter-spacing: 0.01em;
+}
+
+/* Tighten grid gap inside the registration form */
+.mds-registration-section .form-one__group {
+  grid-gap: 16px;
+}
+
+/* Text inputs and tel — match .mds-form-select visually */
+.mds-registration-section input[type=text],
+.mds-registration-section input[type=email],
+.mds-registration-section input[type=tel] {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  height: 60px;
+  padding: 0 20px;
+  background-color: #1A1A2E;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  font-family: inherit;
+  outline: none;
+  transition: border-color 300ms ease;
+}
+
+.mds-registration-section input[type=text]::placeholder,
+.mds-registration-section input[type=email]::placeholder,
+.mds-registration-section input[type=tel]::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.mds-registration-section input[type=text]:focus,
+.mds-registration-section input[type=email]:focus,
+.mds-registration-section input[type=tel]:focus {
+  border-color: #c7954a;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+}
+
+/* Textarea — full-width, same border and background as the select above */
+.mds-registration-section textarea {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  min-height: 180px;
+  height: auto;
+  padding: 16px 20px;
+  background-color: #1A1A2E;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 0;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 15px;
+  font-family: inherit;
+  line-height: 1.65;
+  resize: vertical;
+  outline: none;
+  transition: border-color 300ms ease;
+}
+
+.mds-registration-section textarea::placeholder {
+  color: rgba(255, 255, 255, 0.4);
+}
+
+.mds-registration-section textarea:focus {
+  border-color: #c7954a;
+  color: rgba(255, 255, 255, 0.9);
+  font-weight: 400;
+}
+
+/* File upload — full-width block, aligned under textarea */
+.mds-file-upload-label {
+  display: block;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  margin-bottom: 10px;
+}
+
+.mds-file-upload-input {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 13px 20px;
+  background-color: #1A1A2E;
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 13px;
+  font-family: inherit;
+  cursor: pointer;
+  transition: border-color 300ms ease;
+}
+
+.mds-file-upload-input:hover {
+  border-color: rgba(199, 149, 74, 0.5);
+}
+
+/* Consent label — flex so checkbox stays top-aligned with long text */
+.mds-consent-label {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  font-size: 13px;
+  line-height: 1.65;
+  cursor: pointer;
+}
+
+.mds-consent-label input[type=checkbox] {
+  flex-shrink: 0;
+  margin-top: 2px;
+  width: 16px;
+  height: 16px;
+  accent-color: #c7954a;
+  cursor: pointer;
+}
+
+/* Responsive — tablet */
+@media (max-width: 767px) {
+  .mds-registration-section {
+    padding: 28px 20px 36px;
+  }
+}
+
+/* Responsive — mobile */
+@media (max-width: 575px) {
+  .mds-registration-section {
+    padding: 22px 14px 30px;
+  }
+
+  .mds-form-section-title {
+    font-size: 1.2rem;
+  }
+
+  .mds-registration-section textarea {
+    min-height: 140px;
+  }
+}

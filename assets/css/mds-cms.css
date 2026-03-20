@@ -483,14 +483,114 @@
     padding-bottom: 16px;
     border-bottom: 1px solid rgba(199, 149, 74, 0.2);
 }
+
+/* Grid gap and cell width — ensures every field wrapper is truly full-width */
+.mds-registration-section .form-one__group {
+    grid-gap: 16px;
+}
+.mds-registration-section .form-one__control {
+    width: 100%;
+    min-width: 0; /* prevents grid cell from stretching to content width */
+}
+
+/* Text inputs and tel — dark theme, matches the select dropdown */
+.mds-registration-section input[type=text],
+.mds-registration-section input[type=email],
+.mds-registration-section input[type=tel] {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    height: 60px;
+    padding: 0 20px;
+    background-color: #162252;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 15px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 300ms ease;
+}
+.mds-registration-section input[type=text]::placeholder,
+.mds-registration-section input[type=email]::placeholder,
+.mds-registration-section input[type=tel]::placeholder {
+    color: rgba(255, 255, 255, 0.38);
+}
+.mds-registration-section input[type=text]:focus,
+.mds-registration-section input[type=email]:focus,
+.mds-registration-section input[type=tel]:focus {
+    border-color: #c7954a;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Textarea — full-width, visually aligned with the select above it */
+.mds-registration-section textarea {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    min-height: 180px;
+    height: auto;
+    padding: 16px 20px;
+    background-color: #162252;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 0;
+    color: rgba(255, 255, 255, 0.65);
+    font-size: 15px;
+    font-family: inherit;
+    line-height: 1.65;
+    resize: vertical;
+    outline: none;
+    transition: border-color 300ms ease;
+}
+.mds-registration-section textarea::placeholder {
+    color: rgba(255, 255, 255, 0.38);
+}
+.mds-registration-section textarea:focus {
+    border-color: #c7954a;
+    color: rgba(255, 255, 255, 0.9);
+    outline: none;
+}
+
+/* File upload — full-width block, aligned under textarea */
+.mds-file-upload-label {
+    display: block;
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    margin-bottom: 10px;
+}
+.mds-file-upload-input {
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    padding: 13px 20px;
+    background-color: #162252;
+    border: 1px dashed rgba(255, 255, 255, 0.25);
+    color: rgba(255, 255, 255, 0.85);
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: border-color 300ms ease;
+    color-scheme: dark; /* makes browser-native "Choose File" / "No file chosen" render in light text */
+}
+.mds-file-upload-input:hover {
+    border-color: rgba(199, 149, 74, 0.6);
+}
+
+/* Consent label */
 .mds-consent-label {
     display: flex;
     align-items: flex-start;
-    gap: 12px;
-    color: rgba(255, 255, 255, 0.65);
+    gap: 14px;
+    color: rgba(255, 255, 255, 0.85);
     font-size: 13px;
-    line-height: 1.6;
+    line-height: 1.75;
     cursor: pointer;
+}
+.mds-consent-label span {
+    color: rgba(255, 255, 255, 0.85);
+    line-height: 1.75;
 }
 .mds-consent-label input[type="checkbox"] {
     margin-top: 3px;
@@ -524,6 +624,10 @@
     .mds-page-hero__title { font-size: 28px; }
     .mds-article__title { font-size: 26px; }
     .mds-registration-section { padding: 24px 16px; }
+    .mds-registration-section textarea { min-height: 140px; }
     .mds-publications-preview,
     .mds-intake-preview { padding: 60px 0; }
+}
+@media (max-width: 575px) {
+    .mds-registration-section textarea { min-height: 120px; }
 }
