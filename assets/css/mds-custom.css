@@ -186,12 +186,19 @@ body.boxed-wrapper .page-wrapper {
   border-bottom: none;
 }
 
+/* ─── Header inner — flex row, nav centered between logo & CTA ─── */
+.main-header__inner {
+  display: flex;
+  align-items: center;
+}
+
 /* ─── Header right-side — balanced spacing ───────────────────────── */
 .main-header__right {
   display: flex;
   align-items: center;
   gap: 24px;
   flex-shrink: 0;
+  margin-left: 0;        /* override base margin-left:auto — flex:1 on nav handles spacing */
 }
 
 /* ─── Logo sizing — desktop ─────────────────────────────────────── */
@@ -200,9 +207,33 @@ body.boxed-wrapper .page-wrapper {
   align-items: center;
   justify-content: flex-start;
   flex-shrink: 0;
-  width: 100%;
-  max-width: 420px;
+  width: auto;          /* don't expand — let the image dictate width */
+  margin-right: 24px;   /* override base 100px; nav fills the rest */
   overflow: hidden;
+}
+
+/* ─── Nav — centered between logo and Contact button ────────────── */
+.main-header__nav {
+  flex: 1 1 0%;          /* grow into available space; 0% basis for true centering */
+  display: flex;
+  justify-content: center;
+  margin: 0;             /* override base margin-right:auto */
+  min-width: 0;          /* allow flex shrink below content size */
+}
+
+/* ─── Nav item spacing — tighter for 7-item menu ────────────────── */
+.main-menu .main-menu__list > li + li {
+  margin-left: 28px;
+}
+@media (min-width: 1400px) {
+  .main-menu .main-menu__list > li + li {
+    margin-left: 34px;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1300px) {
+  .main-menu .main-menu__list > li + li {
+    margin-left: 22px;
+  }
 }
 
 .main-header__logo a {
