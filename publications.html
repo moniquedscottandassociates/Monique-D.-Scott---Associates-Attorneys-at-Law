@@ -100,22 +100,9 @@
             </section>
 
             <!-- ===== PUBLICATIONS GRID ===== -->
-            <section style="background-color: #1A1A2E; padding: 80px 0;">
+            <section style="background-color: #0A1545; padding: 80px 0;">
                 <div class="container">
-
-                    <!-- Filter bar -->
-                    <div class="mds-filter-bar" id="pub-filter-bar">
-                        <button class="mds-filter-btn active" data-filter="all">All</button>
-                        <button class="mds-filter-btn" data-filter="Legal Update">Legal Updates</button>
-                        <button class="mds-filter-btn" data-filter="Newsletter">Newsletters</button>
-                        <button class="mds-filter-btn" data-filter="Firm News">Firm News</button>
-                        <button class="mds-filter-btn" data-filter="Case Study">Case Studies</button>
-                        <button class="mds-filter-btn" data-filter="Client Advisory">Client Advisories</button>
-                    </div>
-
-                    <!-- Cards grid — rendered by JS -->
                     <div class="row gutter-y-30" id="pub-grid"></div>
-
                 </div>
             </section>
 
@@ -233,11 +220,6 @@
 
         // Render publications grid
         mdsRenderPublications('pub-grid');
-
-        // Filter
-        mdsInitFilter('pub-filter-bar', 'pub-grid', function(id, opts) {
-            mdsRenderPublications(id, opts);
-        });
     </script>
 </body>
 </html>

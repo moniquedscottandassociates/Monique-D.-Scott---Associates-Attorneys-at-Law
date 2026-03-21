@@ -560,6 +560,10 @@
     letter-spacing: 0.02em;
     margin-bottom: 10px;
 }
+/* Override any theme label colour inside the registration form */
+.mds-registration-section .mds-file-upload-label {
+    color: #ffffff;
+}
 .mds-file-upload-input {
     display: block;
     width: 100%;
