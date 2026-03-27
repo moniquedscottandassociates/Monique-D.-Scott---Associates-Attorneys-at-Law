@@ -16,24 +16,55 @@
 <div class="adm-login-wrap">
     <div class="adm-login-card">
         <img src="/assets/images/mds/logo-transparent.png" alt="Monique D. Scott &amp; Associates" class="adm-login-logo">
-        <h1>Admin Login</h1>
-        <p class="adm-sub">Monique D. Scott &amp; Associates</p>
 
-        <form id="login-form" novalidate>
-            <div class="adm-field">
-                <label for="email">Email Address</label>
-                <input type="email" id="email" name="email" autocomplete="username" placeholder="admin@example.com" required>
-            </div>
-            <div class="adm-field">
-                <label for="password">Password</label>
-                <input type="password" id="password" name="password" autocomplete="current-password" placeholder="••••••••" required>
-            </div>
-            <button type="submit" class="adm-btn" id="login-btn">
-                <i class="fa fa-sign-in-alt"></i> Sign In
-            </button>
-        </form>
+        <!-- === LOGIN VIEW === -->
+        <div id="view-login">
+            <h1>Admin Login</h1>
+            <p class="adm-sub">Monique D. Scott &amp; Associates</p>
 
-        <div class="adm-alert adm-alert--error" id="login-error"></div>
+            <form id="login-form" novalidate>
+                <div class="adm-field">
+                    <label for="email">Email Address</label>
+                    <input type="email" id="email" name="email" autocomplete="username" placeholder="admin@example.com" required>
+                </div>
+                <div class="adm-field">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" autocomplete="current-password" placeholder="••••••••" required>
+                </div>
+                <button type="submit" class="adm-btn" id="login-btn">
+                    <i class="fa fa-sign-in-alt"></i> Sign In
+                </button>
+            </form>
+
+            <div class="adm-alert adm-alert--error" id="login-error"></div>
+
+            <p style="text-align:center; margin-top:18px; font-size:13px;">
+                <a href="#" id="show-forgot">Forgot password?</a>
+            </p>
+        </div>
+
+        <!-- === FORGOT PASSWORD VIEW === -->
+        <div id="view-forgot" style="display:none;">
+            <h1>Reset Password</h1>
+            <p class="adm-sub">Enter your email to receive a reset link</p>
+
+            <form id="forgot-form" novalidate>
+                <div class="adm-field">
+                    <label for="forgot-email">Email Address</label>
+                    <input type="email" id="forgot-email" name="forgot-email" autocomplete="email" placeholder="admin@example.com" required>
+                </div>
+                <button type="submit" class="adm-btn" id="forgot-btn">
+                    <i class="fa fa-paper-plane"></i> Send Reset Link
+                </button>
+            </form>
+
+            <div class="adm-alert adm-alert--error"   id="forgot-error"></div>
+            <div class="adm-alert adm-alert--success" id="forgot-success"></div>
+
+            <p style="text-align:center; margin-top:18px; font-size:13px;">
+                <a href="#" id="show-login"><i class="fa fa-arrow-left"></i> Back to login</a>
+            </p>
+        </div>
     </div>
 </div>
 
@@ -51,15 +82,16 @@
         }
     });
 
-    var form    = document.getElementById('login-form');
-    var btn     = document.getElementById('login-btn');
-    var errBox  = document.getElementById('login-error');
+    // ── Login form ────────────────────────────────────────────────────────────
+    var loginForm = document.getElementById('login-form');
+    var loginBtn  = document.getElementById('login-btn');
+    var loginErr  = document.getElementById('login-error');
 
-    form.addEventListener('submit', function (e) {
+    loginForm.addEventListener('submit', function (e) {
         e.preventDefault();
-        errBox.style.display = 'none';
-        btn.disabled = true;
-        btn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Signing in…';
+        loginErr.style.display = 'none';
+        loginBtn.disabled = true;
+        loginBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Signing in…';
 
         var email    = document.getElementById('email').value.trim();
         var password = document.getElementById('password').value;
@@ -67,14 +99,61 @@
         db.auth.signInWithPassword({ email: email, password: password })
             .then(function (result) {
                 if (result.error) {
-                    errBox.textContent = result.error.message || 'Invalid email or password.';
-                    errBox.style.display = 'block';
-                    btn.disabled = false;
-                    btn.innerHTML = '<i class="fa fa-sign-in-alt"></i> Sign In';
+                    loginErr.textContent   = result.error.message || 'Invalid email or password.';
+                    loginErr.style.display = 'block';
+                    loginBtn.disabled      = false;
+                    loginBtn.innerHTML     = '<i class="fa fa-sign-in-alt"></i> Sign In';
                 } else {
                     window.location.replace('/admin/dashboard.html');
                 }
             });
+    });
+
+    // ── Forgot password form ──────────────────────────────────────────────────
+    var forgotForm    = document.getElementById('forgot-form');
+    var forgotBtn     = document.getElementById('forgot-btn');
+    var forgotErr     = document.getElementById('forgot-error');
+    var forgotSuccess = document.getElementById('forgot-success');
+
+    forgotForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        forgotErr.style.display     = 'none';
+        forgotSuccess.style.display = 'none';
+        forgotBtn.disabled  = true;
+        forgotBtn.innerHTML = '<i class="fa fa-spinner fa-spin"></i> Sending…';
+
+        var email = document.getElementById('forgot-email').value.trim();
+
+        db.auth.resetPasswordForEmail(email, {
+            redirectTo: 'https://moniquedscottandassociates.com/reset-password.html'
+        }).then(function (result) {
+            forgotBtn.disabled  = false;
+            forgotBtn.innerHTML = '<i class="fa fa-paper-plane"></i> Send Reset Link';
+            if (result.error) {
+                forgotErr.textContent   = result.error.message || 'Failed to send reset email.';
+                forgotErr.style.display = 'block';
+            } else {
+                forgotSuccess.textContent   = 'Check your email for a password reset link.';
+                forgotSuccess.style.display = 'block';
+                forgotForm.reset();
+            }
+        });
+    });
+
+    // ── View toggles ──────────────────────────────────────────────────────────
+    document.getElementById('show-forgot').addEventListener('click', function (e) {
+        e.preventDefault();
+        document.getElementById('view-login').style.display  = 'none';
+        document.getElementById('view-forgot').style.display = 'block';
+        forgotErr.style.display     = 'none';
+        forgotSuccess.style.display = 'none';
+    });
+
+    document.getElementById('show-login').addEventListener('click', function (e) {
+        e.preventDefault();
+        document.getElementById('view-forgot').style.display = 'none';
+        document.getElementById('view-login').style.display  = 'block';
+        loginErr.style.display = 'none';
     });
 })();
 </script>

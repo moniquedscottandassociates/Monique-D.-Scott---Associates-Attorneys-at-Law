@@ -33,6 +33,13 @@
   status = 200
   force  = true
 
+# /reset-password clean URL → reset-password page
+[[redirects]]
+  from   = "/reset-password"
+  to     = "/reset-password.html"
+  status = 200
+  force  = true
+
 [[redirects]]
   from   = "/thank-you"
   to     = "/"
